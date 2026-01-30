@@ -34,17 +34,20 @@ export default function Hero() {
         <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight drop-shadow-lg">
           {t.hero.title}
         </h1>
-        <p className="text-xl sm:text-2xl mb-10 text-white/95 max-w-2xl mx-auto font-light drop-shadow-md">
+        <p className="text-xl sm:text-2xl mb-6 text-white/95 max-w-2xl mx-auto font-light drop-shadow-md">
           {t.hero.subtitle}
+        </p>
+        <p className="text-sm sm:text-base mb-10 text-white/85 max-w-xl mx-auto italic">
+          {t.hero.walkInText}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
-            href={t.links.whatsapp}
+            href={t.links.googleMaps}
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-white text-stone-900 font-semibold rounded hover:bg-stone-100 transition-colors w-full sm:w-auto text-center shadow-lg"
           >
-            {t.hero.ctaReserve}
+            {t.hero.ctaDirections}
           </a>
           <Link
             href="/menu"

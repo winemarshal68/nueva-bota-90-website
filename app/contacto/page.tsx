@@ -2,7 +2,7 @@
 
 import { useLanguage } from '@/hooks/useLanguage';
 import { i18n } from '@/content/i18n';
-import { MapPin, Clock, MessageCircle, Instagram } from 'lucide-react';
+import { MapPin, Clock, MessageCircle, Instagram, Phone, Map } from 'lucide-react';
 
 export default function ContactPage() {
   const { language } = useLanguage();
@@ -76,21 +76,37 @@ export default function ContactPage() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <a
               href={t.links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-8 py-4 bg-stone-900 text-white font-semibold rounded hover:bg-stone-800 transition-colors w-full sm:w-auto justify-center"
+              className="flex items-center gap-3 px-6 py-4 bg-stone-900 text-white font-semibold rounded hover:bg-stone-800 transition-colors justify-center"
             >
               <MessageCircle className="w-5 h-5" />
               {t.contactPage.ctaWhatsApp}
             </a>
             <a
+              href={t.links.phone}
+              className="flex items-center gap-3 px-6 py-4 bg-stone-900 text-white font-semibold rounded hover:bg-stone-800 transition-colors justify-center"
+            >
+              <Phone className="w-5 h-5" />
+              {t.contactPage.ctaCall}
+            </a>
+            <a
+              href={t.links.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-6 py-4 bg-transparent border-2 border-stone-900 text-stone-900 font-semibold rounded hover:bg-stone-900 hover:text-white transition-colors justify-center"
+            >
+              <Map className="w-5 h-5" />
+              {t.contactPage.ctaGoogleMaps}
+            </a>
+            <a
               href={t.links.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-stone-900 text-stone-900 font-semibold rounded hover:bg-stone-900 hover:text-white transition-colors w-full sm:w-auto justify-center"
+              className="flex items-center gap-3 px-6 py-4 bg-transparent border-2 border-stone-900 text-stone-900 font-semibold rounded hover:bg-stone-900 hover:text-white transition-colors justify-center"
             >
               <Instagram className="w-5 h-5" />
               {t.contactPage.ctaInstagram}

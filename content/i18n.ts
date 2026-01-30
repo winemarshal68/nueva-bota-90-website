@@ -12,8 +12,9 @@ export const i18n = {
     hero: {
       title: 'Nueva Bota 90',
       subtitle: 'Cocina mediterránea contemporánea en el corazón de La Herradura',
-      ctaReserve: 'Hacer Reserva',
+      ctaDirections: 'Cómo llegar',
       ctaMenu: 'Ver Carta',
+      walkInText: 'Sin reservas la mayor parte del año. En agosto recomendamos reservar.',
     },
     // About section
     about: {
@@ -48,10 +49,11 @@ export const i18n = {
     },
     // Contact page
     contactPage: {
-      title: 'Reservas y Contacto',
+      title: 'Contacto',
       subtitle: 'Estaremos encantados de recibirte',
-      reserveText: 'Para reservas, escríbenos por WhatsApp o visítanos directamente.',
+      reserveText: 'Pásate cuando quieras. En agosto recomendamos reservar por WhatsApp.',
       ctaWhatsApp: 'WhatsApp',
+      ctaCall: 'Llamar',
       ctaInstagram: 'Instagram',
       ctaGoogleMaps: 'Cómo Llegar',
     },
@@ -59,11 +61,12 @@ export const i18n = {
     footer: {
       rights: '© 2025 Nueva Bota 90. Todos los derechos reservados.',
     },
-    // Links (Maria should edit these)
+    // Links (TODO: Replace with actual contact info)
     links: {
-      whatsapp: 'https://wa.me/34XXXXXXXXX', // Replace with actual number
-      instagram: 'https://instagram.com/nuevabota90', // Replace with actual handle
-      googleMaps: 'https://maps.google.com/?q=Calle+Eucaliptos+La+Herradura',
+      whatsapp: 'https://wa.me/34XXXXXXXXX', // TODO: Replace with actual WhatsApp number
+      phone: 'tel:+34XXXXXXXXX', // TODO: Replace with actual phone number
+      instagram: 'https://instagram.com/nuevabota90', // TODO: Replace with actual Instagram handle
+      googleMaps: 'https://maps.google.com/?q=Calle+Eucaliptos+La+Herradura', // Already configured
     },
   },
   en: {
@@ -79,8 +82,9 @@ export const i18n = {
     hero: {
       title: 'Nueva Bota 90',
       subtitle: 'Contemporary Mediterranean cuisine in the heart of La Herradura',
-      ctaReserve: 'Make a Reservation',
+      ctaDirections: 'Get directions',
       ctaMenu: 'View Menu',
+      walkInText: 'Walk-ins welcome most of the year. In August, we recommend booking.',
     },
     // About section
     about: {
@@ -115,10 +119,11 @@ export const i18n = {
     },
     // Contact page
     contactPage: {
-      title: 'Reservations & Contact',
+      title: 'Contact',
       subtitle: 'We look forward to welcoming you',
-      reserveText: 'For reservations, message us on WhatsApp or visit us directly.',
+      reserveText: 'Drop by anytime. In August, we recommend booking via WhatsApp.',
       ctaWhatsApp: 'WhatsApp',
+      ctaCall: 'Call',
       ctaInstagram: 'Instagram',
       ctaGoogleMaps: 'Directions',
     },
@@ -126,11 +131,12 @@ export const i18n = {
     footer: {
       rights: '© 2025 Nueva Bota 90. All rights reserved.',
     },
-    // Links (Maria should edit these)
+    // Links (TODO: Replace with actual contact info)
     links: {
-      whatsapp: 'https://wa.me/34XXXXXXXXX', // Replace with actual number
-      instagram: 'https://instagram.com/nuevabota90', // Replace with actual handle
-      googleMaps: 'https://maps.google.com/?q=Calle+Eucaliptos+La+Herradura',
+      whatsapp: 'https://wa.me/34XXXXXXXXX', // TODO: Replace with actual WhatsApp number
+      phone: 'tel:+34XXXXXXXXX', // TODO: Replace with actual phone number
+      instagram: 'https://instagram.com/nuevabota90', // TODO: Replace with actual Instagram handle
+      googleMaps: 'https://maps.google.com/?q=Calle+Eucaliptos+La+Herradura', // Already configured
     },
   },
 };

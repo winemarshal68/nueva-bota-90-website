@@ -50,14 +50,14 @@ export default function Header() {
               {language === 'es' ? 'EN' : 'ES'}
             </button>
 
-            {/* CTA Button */}
+            {/* WhatsApp Link (subtle) */}
             <a
               href={t.links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2.5 bg-stone-900 text-white font-medium rounded hover:bg-stone-800 transition-colors"
+              className="text-sm text-stone-600 hover:text-stone-900 transition-colors"
             >
-              {t.hero.ctaReserve}
+              WhatsApp
             </a>
           </div>
 
@@ -119,9 +119,9 @@ export default function Header() {
                 href={t.links.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-2.5 bg-stone-900 text-white font-medium rounded hover:bg-stone-800 transition-colors text-center"
+                className="text-stone-700 hover:text-stone-900 transition-colors font-medium py-2"
               >
-                {t.hero.ctaReserve}
+                WhatsApp
               </a>
             </div>
           </div>
