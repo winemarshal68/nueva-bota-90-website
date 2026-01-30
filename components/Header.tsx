@@ -35,6 +35,9 @@ export default function Header() {
             <Link href="/vinos" className="text-stone-700 hover:text-stone-900 transition-colors font-medium">
               {t.nav.wines}
             </Link>
+            <Link href="/galeria" className="text-stone-700 hover:text-stone-900 transition-colors font-medium">
+              {t.nav.gallery}
+            </Link>
             <Link href="/contacto" className="text-stone-700 hover:text-stone-900 transition-colors font-medium">
               {t.nav.contact}
             </Link>
@@ -91,6 +94,13 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t.nav.wines}
+              </Link>
+              <Link
+                href="/galeria"
+                className="text-stone-700 hover:text-stone-900 transition-colors font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {t.nav.gallery}
               </Link>
               <Link
                 href="/contacto"

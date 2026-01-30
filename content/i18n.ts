@@ -5,6 +5,7 @@ export const i18n = {
       home: 'Inicio',
       menu: 'Carta',
       wines: 'Vinos',
+      gallery: 'Galería',
       contact: 'Contacto',
     },
     // Hero
@@ -40,6 +41,11 @@ export const i18n = {
       title: 'Bodega',
       subtitle: 'Selección cuidada de vinos locales e internacionales',
     },
+    // Gallery page
+    galleryPage: {
+      title: 'Galería',
+      subtitle: 'Una ventana a nuestra cocina y ambiente',
+    },
     // Contact page
     contactPage: {
       title: 'Reservas y Contacto',
@@ -66,6 +72,7 @@ export const i18n = {
       home: 'Home',
       menu: 'Menu',
       wines: 'Wines',
+      gallery: 'Gallery',
       contact: 'Contact',
     },
     // Hero
@@ -100,6 +107,11 @@ export const i18n = {
     winePage: {
       title: 'Wine Cellar',
       subtitle: 'Carefully curated selection of local and international wines',
+    },
+    // Gallery page
+    galleryPage: {
+      title: 'Gallery',
+      subtitle: 'A window into our cuisine and atmosphere',
     },
     // Contact page
     contactPage: {

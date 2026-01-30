@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "images": "node scripts/generate-image-manifest.js",
+    "prebuild": "npm run images"
   },
   "dependencies": {
     "lucide-react": "^0.563.0",
