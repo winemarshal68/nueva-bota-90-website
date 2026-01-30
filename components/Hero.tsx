@@ -18,18 +18,23 @@ export default function Hero() {
           alt="Nueva Bota 90"
           fill
           className="object-cover"
+          style={{
+            objectPosition: '50% 35%'
+          }}
           priority
           quality={90}
+          sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Gradient overlay for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+        <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight drop-shadow-lg">
           {t.hero.title}
         </h1>
-        <p className="text-xl sm:text-2xl mb-10 text-white/90 max-w-2xl mx-auto font-light">
+        <p className="text-xl sm:text-2xl mb-10 text-white/95 max-w-2xl mx-auto font-light drop-shadow-md">
           {t.hero.subtitle}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -37,18 +42,27 @@ export default function Hero() {
             href={t.links.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-white text-stone-900 font-semibold rounded hover:bg-stone-100 transition-colors w-full sm:w-auto text-center"
+            className="px-8 py-4 bg-white text-stone-900 font-semibold rounded hover:bg-stone-100 transition-colors w-full sm:w-auto text-center shadow-lg"
           >
             {t.hero.ctaReserve}
           </a>
           <Link
             href="/menu"
-            className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded hover:bg-white hover:text-stone-900 transition-colors w-full sm:w-auto text-center"
+            className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded hover:bg-white hover:text-stone-900 transition-colors w-full sm:w-auto text-center shadow-lg"
           >
             {t.hero.ctaMenu}
           </Link>
         </div>
       </div>
+
+      {/* Mobile-specific object position adjustment */}
+      <style jsx>{`
+        @media (max-width: 640px) {
+          .absolute.inset-0.z-0 img {
+            object-position: 50% 25% !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
