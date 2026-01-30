@@ -1,86 +1,260 @@
 {
   "categories": [
     {
-      "id": "entrantes",
-      "name": "Entrantes",
+      "id": "tablas",
+      "name": "Tablas",
       "items": [
         {
-          "id": "croquetas",
-          "name": "Croquetas de Jamón Ibérico",
-          "description": "Croquetas cremosas de jamón ibérico de bellota, bechamel casera",
+          "id": "chicharrones",
+          "name": "Chicharrones",
+          "priceHalf": "6.00",
+          "priceFull": "9.50"
+        },
+        {
+          "id": "jamon-iberico",
+          "name": "Jamón Ibérico",
+          "priceHalf": "8.00",
+          "priceFull": "15.00"
+        },
+        {
+          "id": "asado-cerdo",
+          "name": "Asado de cerdo",
+          "priceHalf": "6.00",
+          "priceFull": "9.50"
+        },
+        {
+          "id": "queso",
+          "name": "Queso",
+          "priceHalf": "8.00",
+          "priceFull": "15.00"
+        }
+      ]
+    },
+    {
+      "id": "tostas",
+      "name": "Tostas",
+      "items": [
+        {
+          "id": "tosta-atun",
+          "name": "Atún, guacamole, manzana y pan semilla",
+          "price": "11.00"
+        },
+        {
+          "id": "tosta-salmon",
+          "name": "Salmón, queso, mango y manzana",
+          "price": "11.00"
+        },
+        {
+          "id": "tosta-escalibada",
+          "name": "Escalibada con feta",
+          "price": "9.00"
+        }
+      ]
+    },
+    {
+      "id": "hamburguesa",
+      "name": "Hamburguesa",
+      "items": [
+        {
+          "id": "hamburguesa-ternera",
+          "name": "Ternera",
+          "description": "Mermelada de tomate, cebolla frita, queso curado, mezclum de lechuga y salsa miel mostaza en pan brioche. Acompañada de patatas.",
           "price": "12.00"
         },
         {
-          "id": "gazpacho",
-          "name": "Gazpacho Andaluz",
-          "description": "Tomate, pepino, pimiento, ajo, aceite de oliva virgen extra",
-          "price": "9.00"
-        },
+          "id": "hamburguesa-vegetariana",
+          "name": "Vegetariana",
+          "description": "Mermelada de tomate, cebolla frita, queso curado, mezclum de lechuga y salsa miel mostaza en pan brioche. Acompañada de patatas.",
+          "price": "12.00"
+        }
+      ]
+    },
+    {
+      "id": "compartimos",
+      "name": "Compartimos",
+      "items": [
         {
-          "id": "pulpo",
-          "name": "Pulpo a la Brasa",
-          "description": "Pulpo gallego, puré de patata ahumada, pimentón de la Vera",
-          "price": "18.00"
-        },
-        {
-          "id": "tartar",
-          "name": "Tartar de Atún Rojo",
-          "description": "Atún de almadraba, aguacate, sésamo, soja",
+          "id": "costillas",
+          "name": "Costillas",
+          "description": "Cerdo, salsa barbacoa, guacamole, tortitas. Acompañado con patata.",
           "price": "16.00"
-        }
-      ]
-    },
-    {
-      "id": "principales",
-      "name": "Principales",
-      "items": [
-        {
-          "id": "lubina",
-          "name": "Lubina de la Costa",
-          "description": "Lubina salvaje al horno, verduras de temporada, salsa verde",
-          "price": "24.00"
         },
         {
-          "id": "solomillo",
-          "name": "Solomillo de Ternera",
-          "description": "Solomillo de ternera retinta, reducción de vino tinto, patatas confitadas",
-          "price": "26.00"
+          "id": "flamenquin",
+          "name": "Flamenquín",
+          "description": "De cerdo y queso. Acompañado de patatas.",
+          "price": "11.00"
         },
         {
-          "id": "arroz",
-          "name": "Arroz Meloso de Bogavante",
-          "description": "Arroz bomba, bogavante fresco, fumet de marisco",
-          "price": "28.00"
+          "id": "alitas",
+          "name": "Alitas con barbacoa",
+          "price": "8.50"
         },
         {
-          "id": "cordero",
-          "name": "Paletilla de Cordero",
-          "description": "Cordero lechal de las Alpujarras, 8 horas a baja temperatura",
-          "price": "22.00"
-        }
-      ]
-    },
-    {
-      "id": "postres",
-      "name": "Postres",
-      "items": [
+          "id": "pollo-kentucky",
+          "name": "Pollo Kentucky",
+          "priceHalf": "6.75",
+          "priceFull": "11.50"
+        },
         {
-          "id": "tarta-queso",
-          "name": "Tarta de Queso al Horno",
-          "description": "Tarta artesanal de queso con compota de frutos rojos",
+          "id": "tiras-boniato",
+          "name": "Tiras de boniato con miel de caña",
+          "price": "5.50"
+        },
+        {
+          "id": "patatas-salsas",
+          "name": "Patatas con salsas variadas",
           "price": "7.00"
         },
         {
-          "id": "flan",
-          "name": "Flan de Huevo",
-          "description": "Receta tradicional, caramelo casero",
-          "price": "6.00"
+          "id": "croquetas-pollo",
+          "name": "Croquetas de pollo",
+          "priceHalf": "6.75",
+          "priceFull": "11.50"
         },
         {
-          "id": "chocolate",
-          "name": "Coulant de Chocolate",
-          "description": "Chocolate negro 70%, helado de vainilla",
-          "price": "8.00"
+          "id": "croquetas-vegetales",
+          "name": "Croquetas vegetales",
+          "priceHalf": "6.75",
+          "priceFull": "11.50"
+        },
+        {
+          "id": "crujientes-langostinos",
+          "name": "Crujientes de langostinos",
+          "priceHalf": "5.50",
+          "priceFull": "9.00"
+        },
+        {
+          "id": "gyozas",
+          "name": "Gyozas de verdura",
+          "priceHalf": "6.00",
+          "priceFull": "10.50"
+        },
+        {
+          "id": "bao",
+          "name": "Bao de chicharrón o carne desmechada",
+          "price": "5.00"
+        },
+        {
+          "id": "tacos",
+          "name": "Tacos de salmón, ceviche de gamba o carne desmechada",
+          "description": "Opción sin gluten",
+          "price": "4.00"
+        }
+      ]
+    },
+    {
+      "id": "ensaladas",
+      "name": "Ensaladas",
+      "items": [
+        {
+          "id": "burrata",
+          "name": "Burrata",
+          "description": "Guacamole, tomate, queso burrata, pesto, semillas mix y nachos",
+          "price": "12.00"
+        },
+        {
+          "id": "cesar",
+          "name": "Ensalada César",
+          "description": "Mezclum de lechuga, picatostes, pollo, tomatitos cherrys, salsa césar parmesano, semillas. Opción vegetariana.",
+          "price": "9.00"
+        },
+        {
+          "id": "carpaccio-gamba",
+          "name": "Carpaccio gamba",
+          "description": "Tomate, gamba, guacamole",
+          "price": "14.00"
+        },
+        {
+          "id": "hummus",
+          "name": "Hummus",
+          "description": "Verduras variadas y nachos",
+          "price": "7.50"
+        }
+      ]
+    },
+    {
+      "id": "pokes",
+      "name": "Pokes",
+      "items": [
+        {
+          "id": "poke-pollo",
+          "name": "Pollo",
+          "description": "Kentucky, pepino, arroz, mango, queso",
+          "price": "11.50"
+        },
+        {
+          "id": "poke-atun",
+          "name": "Atún",
+          "description": "Atún, guacamole, mango, pepino",
+          "price": "11.50"
+        },
+        {
+          "id": "poke-falafel",
+          "name": "Falafel",
+          "description": "Mango, queso crema y pepino",
+          "price": "11.50"
+        }
+      ]
+    },
+    {
+      "id": "argentinas",
+      "name": "Empanadas Argentinas y Milanesas",
+      "note": "Consultar disponibilidad y precio en el local",
+      "items": [
+        {
+          "id": "empanada-carne",
+          "name": "Empanada Carne",
+          "description": "Mixta, cebolla, pimienta y huevo",
+          "price": "—"
+        },
+        {
+          "id": "choripan",
+          "name": "Choripán",
+          "description": "Chorizo argentino y chimichurri",
+          "price": "—"
+        },
+        {
+          "id": "empanada-jamon-queso",
+          "name": "Empanada Jamón y queso",
+          "description": "Jamón cocido y queso mozzarella",
+          "price": "—"
+        },
+        {
+          "id": "empanada-vegana",
+          "name": "Empanada Vegana",
+          "description": "Tofu, tomate natural, cebolla y pimiento",
+          "price": "—"
+        },
+        {
+          "id": "postre-vigilante",
+          "name": "Postre Vigilante",
+          "description": "Queso y dulce",
+          "price": "—"
+        },
+        {
+          "id": "gourmet-cirjas",
+          "name": "Gourmet Cirjas",
+          "description": "Ternera madura, cheddar, aceitunas negras y huevo",
+          "price": "—"
+        },
+        {
+          "id": "gourmet-provoleta",
+          "name": "Gourmet Provoleta",
+          "description": "Pimiento asado, queso provolone, aceite y orégano",
+          "price": "—"
+        },
+        {
+          "id": "milanesa-pollo",
+          "name": "Milanesa de pollo a la napolitana",
+          "description": "Pollo, tomate natural, jamón cocido, queso havarti",
+          "price": "—"
+        },
+        {
+          "id": "milanesa-ternera",
+          "name": "Milanesa de ternera a la napolitana",
+          "description": "Ternera, tomate natural, jamón cocido, queso havarti",
+          "price": "—"
         }
       ]
     }

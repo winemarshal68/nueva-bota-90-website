@@ -35,9 +35,15 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-stone-900 mb-6">
             {t.about.heading}
           </h2>
-          <p className="text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto mb-8">
             {t.about.text}
           </p>
+          <Link
+            href="/menu"
+            className="inline-block px-8 py-4 bg-stone-900 text-white font-semibold rounded hover:bg-stone-800 transition-colors"
+          >
+            {t.hero.ctaMenu}
+          </Link>
         </div>
       </section>
 

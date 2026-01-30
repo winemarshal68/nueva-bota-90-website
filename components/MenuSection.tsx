@@ -1,14 +1,22 @@
+'use client';
+
+import { useLanguage } from '@/hooks/useLanguage';
+
 interface MenuItem {
   id: string;
   name: string;
   description?: string;
-  price: string;
+  price?: string;
+  priceHalf?: string;
+  priceFull?: string;
   region?: string; // For wines
 }
 
 interface MenuCategory {
   id: string;
   name: string;
+  description?: string;
+  note?: string;
   items: MenuItem[];
 }
 
@@ -17,6 +25,10 @@ interface MenuSectionProps {
 }
 
 export default function MenuSection({ categories }: MenuSectionProps) {
+  const { language } = useLanguage();
+  const halfLabel = language === 'es' ? '1/2' : 'Half';
+  const fullLabel = language === 'es' ? 'Entera' : 'Full';
+
   return (
     <div className="max-w-4xl mx-auto space-y-16">
       {categories.map((category) => (
@@ -24,6 +36,14 @@ export default function MenuSection({ categories }: MenuSectionProps) {
           <h2 className="text-3xl font-serif font-bold text-stone-900 mb-8 pb-3 border-b-2 border-stone-200">
             {category.name}
           </h2>
+          {category.description && (
+            <p className="text-stone-600 italic mb-6">{category.description}</p>
+          )}
+          {category.note && (
+            <p className="text-sm text-stone-500 italic mb-6 bg-stone-50 p-3 rounded">
+              {category.note}
+            </p>
+          )}
           <div className="space-y-6">
             {category.items.map((item) => (
               <div key={item.id} className="group">
@@ -31,9 +51,20 @@ export default function MenuSection({ categories }: MenuSectionProps) {
                   <h3 className="text-xl font-semibold text-stone-900 group-hover:text-stone-700 transition-colors">
                     {item.name}
                   </h3>
-                  <span className="text-xl font-semibold text-stone-900 whitespace-nowrap">
-                    €{item.price}
-                  </span>
+                  {item.price && (
+                    <span className="text-xl font-semibold text-stone-900 whitespace-nowrap">
+                      {item.price === '—' ? '—' : `€${item.price}`}
+                    </span>
+                  )}
+                  {item.priceHalf && item.priceFull && (
+                    <div className="text-xl font-semibold text-stone-900 whitespace-nowrap flex gap-3">
+                      <span className="text-sm text-stone-600 self-center">{halfLabel}</span>
+                      <span>€{item.priceHalf}</span>
+                      <span className="text-stone-400">|</span>
+                      <span className="text-sm text-stone-600 self-center">{fullLabel}</span>
+                      <span>€{item.priceFull}</span>
+                    </div>
+                  )}
                 </div>
                 {item.description && (
                   <p className="text-stone-600 leading-relaxed">{item.description}</p>

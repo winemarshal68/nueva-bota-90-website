@@ -1,86 +1,264 @@
 {
   "categories": [
     {
-      "id": "starters",
-      "name": "Starters",
+      "id": "tablas",
+      "name": "Boards",
       "items": [
         {
-          "id": "croquetas",
-          "name": "Iberian Ham Croquettes",
-          "description": "Creamy acorn-fed Iberian ham croquettes, homemade béchamel",
+          "id": "chicharrones",
+          "name": "Chicharrones",
+          "description": "Crispy pork rinds",
+          "priceHalf": "6.00",
+          "priceFull": "9.50"
+        },
+        {
+          "id": "jamon-iberico",
+          "name": "Jamón Ibérico",
+          "description": "Iberian cured ham",
+          "priceHalf": "8.00",
+          "priceFull": "15.00"
+        },
+        {
+          "id": "asado-cerdo",
+          "name": "Roast Pork",
+          "priceHalf": "6.00",
+          "priceFull": "9.50"
+        },
+        {
+          "id": "queso",
+          "name": "Cheese",
+          "priceHalf": "8.00",
+          "priceFull": "15.00"
+        }
+      ]
+    },
+    {
+      "id": "tostas",
+      "name": "Tostas",
+      "description": "Open-faced toasts",
+      "items": [
+        {
+          "id": "tosta-atun",
+          "name": "Tuna, guacamole, apple on seeded bread",
+          "price": "11.00"
+        },
+        {
+          "id": "tosta-salmon",
+          "name": "Salmon, cheese, mango and apple",
+          "price": "11.00"
+        },
+        {
+          "id": "tosta-escalibada",
+          "name": "Escalibada with feta",
+          "description": "Roasted vegetable medley",
+          "price": "9.00"
+        }
+      ]
+    },
+    {
+      "id": "hamburguesa",
+      "name": "Burgers",
+      "items": [
+        {
+          "id": "hamburguesa-ternera",
+          "name": "Beef Burger",
+          "description": "Tomato marmalade, fried onion, aged cheese, mixed greens and honey mustard sauce on brioche bun. Served with fries.",
           "price": "12.00"
         },
         {
-          "id": "gazpacho",
-          "name": "Andalusian Gazpacho",
-          "description": "Tomato, cucumber, pepper, garlic, extra virgin olive oil",
-          "price": "9.00"
-        },
+          "id": "hamburguesa-vegetariana",
+          "name": "Vegetarian Burger",
+          "description": "Tomato marmalade, fried onion, aged cheese, mixed greens and honey mustard sauce on brioche bun. Served with fries.",
+          "price": "12.00"
+        }
+      ]
+    },
+    {
+      "id": "compartimos",
+      "name": "For Sharing",
+      "items": [
         {
-          "id": "pulpo",
-          "name": "Grilled Octopus",
-          "description": "Galician octopus, smoked potato purée, pimentón de la Vera",
-          "price": "18.00"
-        },
-        {
-          "id": "tartar",
-          "name": "Bluefin Tuna Tartare",
-          "description": "Almadraba tuna, avocado, sesame, soy",
+          "id": "costillas",
+          "name": "Ribs",
+          "description": "Pork ribs, barbecue sauce, guacamole, tortillas. Served with fries.",
           "price": "16.00"
-        }
-      ]
-    },
-    {
-      "id": "mains",
-      "name": "Mains",
-      "items": [
-        {
-          "id": "lubina",
-          "name": "Local Sea Bass",
-          "description": "Wild sea bass baked, seasonal vegetables, green sauce",
-          "price": "24.00"
         },
         {
-          "id": "solomillo",
-          "name": "Beef Tenderloin",
-          "description": "Retinta beef tenderloin, red wine reduction, confit potatoes",
-          "price": "26.00"
+          "id": "flamenquin",
+          "name": "Flamenquín",
+          "description": "Pork and cheese roll, breaded and fried. Served with fries.",
+          "price": "11.00"
         },
         {
-          "id": "arroz",
-          "name": "Creamy Lobster Rice",
-          "description": "Bomba rice, fresh lobster, seafood stock",
-          "price": "28.00"
+          "id": "alitas",
+          "name": "BBQ Wings",
+          "price": "8.50"
         },
         {
-          "id": "cordero",
-          "name": "Lamb Shoulder",
-          "description": "Suckling lamb from Alpujarras, 8 hours slow-cooked",
-          "price": "22.00"
-        }
-      ]
-    },
-    {
-      "id": "desserts",
-      "name": "Desserts",
-      "items": [
+          "id": "pollo-kentucky",
+          "name": "Kentucky Chicken",
+          "priceHalf": "6.75",
+          "priceFull": "11.50"
+        },
         {
-          "id": "tarta-queso",
-          "name": "Baked Cheesecake",
-          "description": "Artisanal cheesecake with red berry compote",
+          "id": "tiras-boniato",
+          "name": "Sweet potato strips with cane honey",
+          "price": "5.50"
+        },
+        {
+          "id": "patatas-salsas",
+          "name": "Potatoes with assorted sauces",
           "price": "7.00"
         },
         {
-          "id": "flan",
-          "name": "Egg Flan",
-          "description": "Traditional recipe, homemade caramel",
-          "price": "6.00"
+          "id": "croquetas-pollo",
+          "name": "Chicken croquettes",
+          "priceHalf": "6.75",
+          "priceFull": "11.50"
         },
         {
-          "id": "chocolate",
-          "name": "Chocolate Coulant",
-          "description": "70% dark chocolate, vanilla ice cream",
-          "price": "8.00"
+          "id": "croquetas-vegetales",
+          "name": "Vegetable croquettes",
+          "priceHalf": "6.75",
+          "priceFull": "11.50"
+        },
+        {
+          "id": "crujientes-langostinos",
+          "name": "Crispy prawns",
+          "priceHalf": "5.50",
+          "priceFull": "9.00"
+        },
+        {
+          "id": "gyozas",
+          "name": "Vegetable gyozas",
+          "priceHalf": "6.00",
+          "priceFull": "10.50"
+        },
+        {
+          "id": "bao",
+          "name": "Bao with chicharrón or pulled pork",
+          "price": "5.00"
+        },
+        {
+          "id": "tacos",
+          "name": "Tacos: salmon, prawn ceviche or pulled pork",
+          "description": "Gluten-free option available",
+          "price": "4.00"
+        }
+      ]
+    },
+    {
+      "id": "ensaladas",
+      "name": "Salads",
+      "items": [
+        {
+          "id": "burrata",
+          "name": "Burrata",
+          "description": "Guacamole, tomato, burrata cheese, pesto, mixed seeds and nachos",
+          "price": "12.00"
+        },
+        {
+          "id": "cesar",
+          "name": "Caesar Salad",
+          "description": "Mixed greens, croutons, chicken, cherry tomatoes, parmesan caesar dressing, seeds. Vegetarian option available.",
+          "price": "9.00"
+        },
+        {
+          "id": "carpaccio-gamba",
+          "name": "Prawn Carpaccio",
+          "description": "Tomato, prawns, guacamole",
+          "price": "14.00"
+        },
+        {
+          "id": "hummus",
+          "name": "Hummus",
+          "description": "Assorted vegetables and nachos",
+          "price": "7.50"
+        }
+      ]
+    },
+    {
+      "id": "pokes",
+      "name": "Poke Bowls",
+      "items": [
+        {
+          "id": "poke-pollo",
+          "name": "Chicken Poke",
+          "description": "Kentucky chicken, cucumber, rice, mango, cheese",
+          "price": "11.50"
+        },
+        {
+          "id": "poke-atun",
+          "name": "Tuna Poke",
+          "description": "Tuna, guacamole, mango, cucumber",
+          "price": "11.50"
+        },
+        {
+          "id": "poke-falafel",
+          "name": "Falafel Poke",
+          "description": "Mango, cream cheese and cucumber",
+          "price": "11.50"
+        }
+      ]
+    },
+    {
+      "id": "argentinas",
+      "name": "Argentine Empanadas & Milanesas",
+      "note": "Ask in-house for price and availability",
+      "items": [
+        {
+          "id": "empanada-carne",
+          "name": "Meat Empanada",
+          "description": "Mixed meat, onion, pepper and egg",
+          "price": "—"
+        },
+        {
+          "id": "choripan",
+          "name": "Choripán",
+          "description": "Argentine chorizo and chimichurri",
+          "price": "—"
+        },
+        {
+          "id": "empanada-jamon-queso",
+          "name": "Ham & Cheese Empanada",
+          "description": "Cooked ham and mozzarella cheese",
+          "price": "—"
+        },
+        {
+          "id": "empanada-vegana",
+          "name": "Vegan Empanada",
+          "description": "Tofu, fresh tomato, onion and pepper",
+          "price": "—"
+        },
+        {
+          "id": "postre-vigilante",
+          "name": "Vigilante Dessert",
+          "description": "Cheese and dulce de leche",
+          "price": "—"
+        },
+        {
+          "id": "gourmet-cirjas",
+          "name": "Gourmet Cirjas",
+          "description": "Aged beef, cheddar, black olives and egg",
+          "price": "—"
+        },
+        {
+          "id": "gourmet-provoleta",
+          "name": "Gourmet Provoleta",
+          "description": "Roasted pepper, provolone cheese, oil and oregano",
+          "price": "—"
+        },
+        {
+          "id": "milanesa-pollo",
+          "name": "Chicken Milanesa Napolitana",
+          "description": "Breaded chicken, fresh tomato, cooked ham, havarti cheese",
+          "price": "—"
+        },
+        {
+          "id": "milanesa-ternera",
+          "name": "Beef Milanesa Napolitana",
+          "description": "Breaded beef, fresh tomato, cooked ham, havarti cheese",
+          "price": "—"
         }
       ]
     }

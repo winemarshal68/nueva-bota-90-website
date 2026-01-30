@@ -18,7 +18,7 @@ export const i18n = {
     // About section
     about: {
       heading: 'Tradición y sabor',
-      text: 'En Nueva Bota 90 celebramos la esencia de la cocina andaluza con un toque contemporáneo. Cada plato cuenta una historia de ingredientes frescos, técnicas refinadas y pasión por el buen comer.',
+      text: 'Tablas para compartir, tostas, pokes, ensaladas, hamburguesas y nuestra selección de empanadas argentinas. Cocina honesta con ingredientes frescos en el corazón de La Herradura.',
     },
     // Info section
     info: {
@@ -34,7 +34,7 @@ export const i18n = {
     // Menu page
     menuPage: {
       title: 'Nuestra Carta',
-      subtitle: 'Platos creados con productos de temporada y técnicas contemporáneas',
+      subtitle: 'Para compartir, disfrutar y repetir',
     },
     // Wine page
     winePage: {
@@ -85,7 +85,7 @@ export const i18n = {
     // About section
     about: {
       heading: 'Tradition and flavor',
-      text: 'At Nueva Bota 90 we celebrate the essence of Andalusian cuisine with a contemporary touch. Each dish tells a story of fresh ingredients, refined techniques and passion for good food.',
+      text: 'Sharing boards, tostas, poke bowls, salads, burgers and our selection of Argentine empanadas. Honest cooking with fresh ingredients in the heart of La Herradura.',
     },
     // Info section
     info: {
@@ -101,7 +101,7 @@ export const i18n = {
     // Menu page
     menuPage: {
       title: 'Our Menu',
-      subtitle: 'Dishes crafted with seasonal ingredients and contemporary techniques',
+      subtitle: 'For sharing, enjoying and coming back for more',
     },
     // Wine page
     winePage: {
