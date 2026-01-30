@@ -66,7 +66,7 @@ export const i18n = {
       whatsapp: 'https://wa.me/34XXXXXXXXX', // TODO: Replace with actual WhatsApp number
       phone: 'tel:+34XXXXXXXXX', // TODO: Replace with actual phone number
       instagram: 'https://instagram.com/nuevabota90', // TODO: Replace with actual Instagram handle
-      googleMaps: 'https://maps.google.com/?q=Calle+Eucaliptos+La+Herradura', // Already configured
+      googleMaps: 'https://www.google.com/maps/search/?api=1&query=36.73377789153218,-3.73971882445825',
     },
   },
   en: {
@@ -136,7 +136,7 @@ export const i18n = {
       whatsapp: 'https://wa.me/34XXXXXXXXX', // TODO: Replace with actual WhatsApp number
       phone: 'tel:+34XXXXXXXXX', // TODO: Replace with actual phone number
       instagram: 'https://instagram.com/nuevabota90', // TODO: Replace with actual Instagram handle
-      googleMaps: 'https://maps.google.com/?q=Calle+Eucaliptos+La+Herradura', // Already configured
+      googleMaps: 'https://www.google.com/maps/search/?api=1&query=36.73377789153218,-3.73971882445825',
     },
   },
 };
