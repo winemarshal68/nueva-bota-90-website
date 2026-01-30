@@ -30,17 +30,17 @@ export default function Home() {
       <Hero />
 
       {/* About Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-stone-900 mb-6">
+      <section className="px-4 sm:px-6 lg:px-8 bg-stone-50">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="font-serif text-stone-900 mb-5">
             {t.about.heading}
           </h2>
-          <p className="text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto mb-8">
+          <p className="text-lg text-stone-700 leading-relaxed max-w-2xl mx-auto mb-10 font-light">
             {t.about.text}
           </p>
           <Link
             href="/menu"
-            className="inline-block px-8 py-4 bg-stone-900 text-white font-semibold rounded hover:bg-stone-800 transition-colors"
+            className="inline-block px-7 py-3 bg-stone-900 text-white text-sm font-medium rounded-sm hover:bg-stone-800 transition-all duration-200 tracking-wide"
           >
             {t.hero.ctaMenu}
           </Link>
@@ -51,14 +51,14 @@ export default function Home() {
       <ImageStrip images={galleryImages} alt="Nueva Bota 90 interior" />
 
       {/* Info Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section className="px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12">
           {/* Location */}
           <div className="text-center md:text-left">
-            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-4">
+            <h3 className="text-xl font-serif font-semibold text-stone-900 mb-4 tracking-tight">
               {t.info.locationTitle}
             </h3>
-            <p className="text-stone-600 leading-relaxed">
+            <p className="text-stone-600 leading-relaxed text-[15px] mb-4">
               {t.info.locationAddress}
               <br />
               {t.info.locationCity}
@@ -67,29 +67,29 @@ export default function Home() {
               href={t.links.googleMaps}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-4 text-stone-900 hover:text-stone-700 font-medium transition-colors"
+              className="inline-block text-sm text-stone-900 hover:text-stone-700 font-medium transition-colors tracking-wide underline decoration-stone-300 underline-offset-4 hover:decoration-stone-500"
             >
-              {t.contactPage.ctaGoogleMaps} →
+              {t.contactPage.ctaGoogleMaps}
             </a>
           </div>
 
           {/* Hours */}
           <div className="text-center md:text-left">
-            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-4">
+            <h3 className="text-xl font-serif font-semibold text-stone-900 mb-4 tracking-tight">
               {t.info.hoursTitle}
             </h3>
-            <p className="text-stone-600 leading-relaxed">
+            <p className="text-stone-600 leading-relaxed text-[15px]">
               {t.info.hoursRestaurant}
               <br />
               {t.info.hoursKitchen}
               <br />
-              <span className="text-stone-400">{t.info.hoursClosed}</span>
+              <span className="text-stone-400 italic">{t.info.hoursClosed}</span>
             </p>
           </div>
 
           {/* Contact */}
           <div className="text-center md:text-left">
-            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-4">
+            <h3 className="text-xl font-serif font-semibold text-stone-900 mb-4 tracking-tight">
               {t.info.contactTitle}
             </h3>
             <div className="space-y-3">
@@ -97,7 +97,7 @@ export default function Home() {
                 href={t.links.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-stone-600 hover:text-stone-900 transition-colors"
+                className="block text-[15px] text-stone-600 hover:text-stone-900 transition-colors"
               >
                 WhatsApp
               </a>
@@ -105,15 +105,15 @@ export default function Home() {
                 href={t.links.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-stone-600 hover:text-stone-900 transition-colors"
+                className="block text-[15px] text-stone-600 hover:text-stone-900 transition-colors"
               >
                 Instagram
               </a>
               <Link
                 href="/contacto"
-                className="block text-stone-900 hover:text-stone-700 font-medium transition-colors"
+                className="block text-sm text-stone-900 hover:text-stone-700 font-medium transition-colors tracking-wide underline decoration-stone-300 underline-offset-4 hover:decoration-stone-500"
               >
-                {t.nav.contact} →
+                {t.nav.contact}
               </Link>
             </div>
           </div>
