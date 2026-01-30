@@ -1,0 +1,98 @@
+{
+  "categories": [
+    {
+      "id": "whites",
+      "name": "White Wines",
+      "items": [
+        {
+          "id": "albarino",
+          "name": "Albariño Rías Baixas",
+          "region": "Galicia",
+          "description": "Fresh and fruity with citrus notes",
+          "price": "22.00"
+        },
+        {
+          "id": "verdejo",
+          "name": "Verdejo Rueda",
+          "region": "Castilla y León",
+          "description": "Aromatic, herbaceous, perfectly balanced",
+          "price": "18.00"
+        },
+        {
+          "id": "chardonnay",
+          "name": "Chardonnay Penedès",
+          "region": "Catalonia",
+          "description": "Barrel-fermented, complex and elegant",
+          "price": "24.00"
+        }
+      ]
+    },
+    {
+      "id": "reds",
+      "name": "Red Wines",
+      "items": [
+        {
+          "id": "rioja-crianza",
+          "name": "Rioja Crianza",
+          "region": "La Rioja",
+          "description": "Aged Tempranillo, soft tannins, vanilla notes",
+          "price": "26.00"
+        },
+        {
+          "id": "ribera-duero",
+          "name": "Ribera del Duero Reserva",
+          "region": "Castilla y León",
+          "description": "Powerful and structured, 18 months in barrel",
+          "price": "32.00"
+        },
+        {
+          "id": "priorat",
+          "name": "Priorat",
+          "region": "Catalonia",
+          "description": "Garnacha and Cariñena, mineral and complex",
+          "price": "38.00"
+        },
+        {
+          "id": "pinot-noir",
+          "name": "Pinot Noir",
+          "region": "France",
+          "description": "Elegant, silky, red fruit notes",
+          "price": "34.00"
+        }
+      ]
+    },
+    {
+      "id": "roses",
+      "name": "Rosé Wines",
+      "items": [
+        {
+          "id": "rosado-navarra",
+          "name": "Rosado de Navarra",
+          "region": "Navarra",
+          "description": "Garnacha, fresh and fruity",
+          "price": "16.00"
+        }
+      ]
+    },
+    {
+      "id": "sparkling",
+      "name": "Sparkling Wines",
+      "items": [
+        {
+          "id": "cava-brut",
+          "name": "Cava Brut Nature",
+          "region": "Penedès",
+          "description": "Traditional method, elegant and dry",
+          "price": "20.00"
+        },
+        {
+          "id": "champagne",
+          "name": "Champagne Brut",
+          "region": "France",
+          "description": "Fine bubbles, complexity and elegance",
+          "price": "55.00"
+        }
+      ]
+    }
+  ]
+}

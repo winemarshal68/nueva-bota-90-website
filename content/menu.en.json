@@ -1,0 +1,88 @@
+{
+  "categories": [
+    {
+      "id": "starters",
+      "name": "Starters",
+      "items": [
+        {
+          "id": "croquetas",
+          "name": "Iberian Ham Croquettes",
+          "description": "Creamy acorn-fed Iberian ham croquettes, homemade béchamel",
+          "price": "12.00"
+        },
+        {
+          "id": "gazpacho",
+          "name": "Andalusian Gazpacho",
+          "description": "Tomato, cucumber, pepper, garlic, extra virgin olive oil",
+          "price": "9.00"
+        },
+        {
+          "id": "pulpo",
+          "name": "Grilled Octopus",
+          "description": "Galician octopus, smoked potato purée, pimentón de la Vera",
+          "price": "18.00"
+        },
+        {
+          "id": "tartar",
+          "name": "Bluefin Tuna Tartare",
+          "description": "Almadraba tuna, avocado, sesame, soy",
+          "price": "16.00"
+        }
+      ]
+    },
+    {
+      "id": "mains",
+      "name": "Mains",
+      "items": [
+        {
+          "id": "lubina",
+          "name": "Local Sea Bass",
+          "description": "Wild sea bass baked, seasonal vegetables, green sauce",
+          "price": "24.00"
+        },
+        {
+          "id": "solomillo",
+          "name": "Beef Tenderloin",
+          "description": "Retinta beef tenderloin, red wine reduction, confit potatoes",
+          "price": "26.00"
+        },
+        {
+          "id": "arroz",
+          "name": "Creamy Lobster Rice",
+          "description": "Bomba rice, fresh lobster, seafood stock",
+          "price": "28.00"
+        },
+        {
+          "id": "cordero",
+          "name": "Lamb Shoulder",
+          "description": "Suckling lamb from Alpujarras, 8 hours slow-cooked",
+          "price": "22.00"
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "items": [
+        {
+          "id": "tarta-queso",
+          "name": "Baked Cheesecake",
+          "description": "Artisanal cheesecake with red berry compote",
+          "price": "7.00"
+        },
+        {
+          "id": "flan",
+          "name": "Egg Flan",
+          "description": "Traditional recipe, homemade caramel",
+          "price": "6.00"
+        },
+        {
+          "id": "chocolate",
+          "name": "Chocolate Coulant",
+          "description": "70% dark chocolate, vanilla ice cream",
+          "price": "8.00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,65 +1,110 @@
-import Image from "next/image";
+'use client';
+
+import Hero from '@/components/Hero';
+import ImageStrip from '@/components/ImageStrip';
+import { useLanguage } from '@/hooks/useLanguage';
+import { i18n } from '@/content/i18n';
+import Link from 'next/link';
 
 export default function Home() {
+  const { language } = useLanguage();
+  const t = i18n[language];
+
+  const galleryImages = [
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=800&fit=crop',
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <Hero />
+
+      {/* About Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-50">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-stone-900 mb-6">
+            {t.about.heading}
+          </h2>
+          <p className="text-xl text-stone-600 leading-relaxed max-w-3xl mx-auto">
+            {t.about.text}
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Gallery Preview */}
+      <ImageStrip images={galleryImages} alt="Nueva Bota 90 interior" />
+
+      {/* Info Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* Location */}
+          <div className="text-center md:text-left">
+            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-4">
+              {t.info.locationTitle}
+            </h3>
+            <p className="text-stone-600 leading-relaxed">
+              {t.info.locationAddress}
+              <br />
+              {t.info.locationCity}
+            </p>
+            <a
+              href={t.links.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-4 text-stone-900 hover:text-stone-700 font-medium transition-colors"
+            >
+              {t.contactPage.ctaGoogleMaps} →
+            </a>
+          </div>
+
+          {/* Hours */}
+          <div className="text-center md:text-left">
+            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-4">
+              {t.info.hoursTitle}
+            </h3>
+            <p className="text-stone-600 leading-relaxed">
+              {t.info.hoursRestaurant}
+              <br />
+              {t.info.hoursKitchen}
+              <br />
+              <span className="text-stone-400">{t.info.hoursClosed}</span>
+            </p>
+          </div>
+
+          {/* Contact */}
+          <div className="text-center md:text-left">
+            <h3 className="text-2xl font-serif font-bold text-stone-900 mb-4">
+              {t.info.contactTitle}
+            </h3>
+            <div className="space-y-3">
+              <a
+                href={t.links.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-stone-600 hover:text-stone-900 transition-colors"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={t.links.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-stone-600 hover:text-stone-900 transition-colors"
+              >
+                Instagram
+              </a>
+              <Link
+                href="/contacto"
+                className="block text-stone-900 hover:text-stone-700 font-medium transition-colors"
+              >
+                {t.nav.contact} →
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }

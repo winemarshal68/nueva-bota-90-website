@@ -1,0 +1,98 @@
+{
+  "categories": [
+    {
+      "id": "blancos",
+      "name": "Vinos Blancos",
+      "items": [
+        {
+          "id": "albarino",
+          "name": "Albariño Rías Baixas",
+          "region": "Galicia",
+          "description": "Fresco y afrutado con notas cítricas",
+          "price": "22.00"
+        },
+        {
+          "id": "verdejo",
+          "name": "Verdejo Rueda",
+          "region": "Castilla y León",
+          "description": "Aromático, herbáceo, perfectamente equilibrado",
+          "price": "18.00"
+        },
+        {
+          "id": "chardonnay",
+          "name": "Chardonnay Penedès",
+          "region": "Cataluña",
+          "description": "Fermentado en barrica, complejo y elegante",
+          "price": "24.00"
+        }
+      ]
+    },
+    {
+      "id": "tintos",
+      "name": "Vinos Tintos",
+      "items": [
+        {
+          "id": "rioja-crianza",
+          "name": "Rioja Crianza",
+          "region": "La Rioja",
+          "description": "Tempranillo envejecido, taninos suaves, notas de vainilla",
+          "price": "26.00"
+        },
+        {
+          "id": "ribera-duero",
+          "name": "Ribera del Duero Reserva",
+          "region": "Castilla y León",
+          "description": "Potente y estructurado, 18 meses en barrica",
+          "price": "32.00"
+        },
+        {
+          "id": "priorat",
+          "name": "Priorat",
+          "region": "Cataluña",
+          "description": "Garnacha y Cariñena, mineral y complejo",
+          "price": "38.00"
+        },
+        {
+          "id": "pinot-noir",
+          "name": "Pinot Noir",
+          "region": "Francia",
+          "description": "Elegante, sedoso, notas de frutos rojos",
+          "price": "34.00"
+        }
+      ]
+    },
+    {
+      "id": "rosados",
+      "name": "Vinos Rosados",
+      "items": [
+        {
+          "id": "rosado-navarra",
+          "name": "Rosado de Navarra",
+          "region": "Navarra",
+          "description": "Garnacha, fresco y frutal",
+          "price": "16.00"
+        }
+      ]
+    },
+    {
+      "id": "espumosos",
+      "name": "Espumosos",
+      "items": [
+        {
+          "id": "cava-brut",
+          "name": "Cava Brut Nature",
+          "region": "Penedès",
+          "description": "Método tradicional, elegante y seco",
+          "price": "20.00"
+        },
+        {
+          "id": "champagne",
+          "name": "Champagne Brut",
+          "region": "Francia",
+          "description": "Burbujas finas, complejidad y elegancia",
+          "price": "55.00"
+        }
+      ]
+    }
+  ]
+}

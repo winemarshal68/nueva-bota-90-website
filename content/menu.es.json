@@ -1,0 +1,88 @@
+{
+  "categories": [
+    {
+      "id": "entrantes",
+      "name": "Entrantes",
+      "items": [
+        {
+          "id": "croquetas",
+          "name": "Croquetas de Jamón Ibérico",
+          "description": "Croquetas cremosas de jamón ibérico de bellota, bechamel casera",
+          "price": "12.00"
+        },
+        {
+          "id": "gazpacho",
+          "name": "Gazpacho Andaluz",
+          "description": "Tomate, pepino, pimiento, ajo, aceite de oliva virgen extra",
+          "price": "9.00"
+        },
+        {
+          "id": "pulpo",
+          "name": "Pulpo a la Brasa",
+          "description": "Pulpo gallego, puré de patata ahumada, pimentón de la Vera",
+          "price": "18.00"
+        },
+        {
+          "id": "tartar",
+          "name": "Tartar de Atún Rojo",
+          "description": "Atún de almadraba, aguacate, sésamo, soja",
+          "price": "16.00"
+        }
+      ]
+    },
+    {
+      "id": "principales",
+      "name": "Principales",
+      "items": [
+        {
+          "id": "lubina",
+          "name": "Lubina de la Costa",
+          "description": "Lubina salvaje al horno, verduras de temporada, salsa verde",
+          "price": "24.00"
+        },
+        {
+          "id": "solomillo",
+          "name": "Solomillo de Ternera",
+          "description": "Solomillo de ternera retinta, reducción de vino tinto, patatas confitadas",
+          "price": "26.00"
+        },
+        {
+          "id": "arroz",
+          "name": "Arroz Meloso de Bogavante",
+          "description": "Arroz bomba, bogavante fresco, fumet de marisco",
+          "price": "28.00"
+        },
+        {
+          "id": "cordero",
+          "name": "Paletilla de Cordero",
+          "description": "Cordero lechal de las Alpujarras, 8 horas a baja temperatura",
+          "price": "22.00"
+        }
+      ]
+    },
+    {
+      "id": "postres",
+      "name": "Postres",
+      "items": [
+        {
+          "id": "tarta-queso",
+          "name": "Tarta de Queso al Horno",
+          "description": "Tarta artesanal de queso con compota de frutos rojos",
+          "price": "7.00"
+        },
+        {
+          "id": "flan",
+          "name": "Flan de Huevo",
+          "description": "Receta tradicional, caramelo casero",
+          "price": "6.00"
+        },
+        {
+          "id": "chocolate",
+          "name": "Coulant de Chocolate",
+          "description": "Chocolate negro 70%, helado de vainilla",
+          "price": "8.00"
+        }
+      ]
+    }
+  ]
+}
