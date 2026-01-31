@@ -420,21 +420,27 @@ export default async function AdminPage() {
               <table className="w-full text-sm border border-stone-200">
                 <thead className="bg-stone-100">
                   <tr>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Sección</th>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Nombre</th>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Precio</th>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Disponible</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Sección</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Nombre</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Precio</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Disponible</th>
                   </tr>
                 </thead>
                 <tbody>
                   {cartaItems.map((item, idx) => (
-                    <tr key={idx} className="border-b border-stone-100">
-                      <td className="px-3 py-2 text-stone-600">{item.seccion}</td>
-                      <td className="px-3 py-2 text-stone-900">{item.nombre}</td>
-                      <td className="px-3 py-2 text-stone-600">
-                        {item.precio || (item.precio_media && item.precio_entera ? `${item.precio_media}/${item.precio_entera}` : '—')}
+                    <tr key={idx} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                      <td className="px-4 py-3 text-stone-600 border-l-2 border-stone-300 bg-stone-50/50">{item.seccion}</td>
+                      <td className="px-4 py-3 text-stone-900">{item.nombre}</td>
+                      <td className="px-4 py-3 text-stone-600 font-mono">
+                        {item.precio || (item.precio_media && item.precio_entera ? (
+                          <span className="whitespace-nowrap">
+                            <span className="text-stone-700">{item.precio_media}</span>
+                            <span className="text-stone-400 mx-1">/</span>
+                            <span className="text-stone-700">{item.precio_entera}</span>
+                          </span>
+                        ) : '—')}
                       </td>
-                      <td className="px-3 py-2">
+                      <td className="px-4 py-3">
                         <span className={`text-xs px-2 py-1 rounded ${item.disponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {item.disponible ? 'SÍ' : 'NO'}
                         </span>
@@ -455,19 +461,19 @@ export default async function AdminPage() {
               <table className="w-full text-sm border border-stone-200">
                 <thead className="bg-stone-100">
                   <tr>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Categoría</th>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Nombre</th>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Precio</th>
-                    <th className="px-3 py-2 text-left border-b border-stone-200">Disponible</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Categoría</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Nombre</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Precio</th>
+                    <th className="px-4 py-3 text-left border-b border-stone-200 font-semibold">Disponible</th>
                   </tr>
                 </thead>
                 <tbody>
                   {vinosItems.map((item, idx) => (
-                    <tr key={idx} className="border-b border-stone-100">
-                      <td className="px-3 py-2 text-stone-600">{item.seccion}</td>
-                      <td className="px-3 py-2 text-stone-900">{item.nombre}</td>
-                      <td className="px-3 py-2 text-stone-600">{item.precio || '—'}</td>
-                      <td className="px-3 py-2">
+                    <tr key={idx} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                      <td className="px-4 py-3 text-stone-600 border-l-2 border-stone-300 bg-stone-50/50">{item.seccion}</td>
+                      <td className="px-4 py-3 text-stone-900">{item.nombre}</td>
+                      <td className="px-4 py-3 text-stone-600 font-mono">{item.precio || '—'}</td>
+                      <td className="px-4 py-3">
                         <span className={`text-xs px-2 py-1 rounded ${item.disponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {item.disponible ? 'SÍ' : 'NO'}
                         </span>
