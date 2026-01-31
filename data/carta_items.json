@@ -1,0 +1,293 @@
+{
+  "items": [
+    {
+      "seccion": "Tablas",
+      "nombre": "Chicharrones",
+      "precio_media": "6.00",
+      "precio_entera": "9.50",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Tablas",
+      "nombre": "Jamón Ibérico",
+      "precio_media": "8.00",
+      "precio_entera": "15.00",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Tablas",
+      "nombre": "Asado de cerdo",
+      "precio_media": "6.00",
+      "precio_entera": "9.50",
+      "disponible": true,
+      "orden": 3
+    },
+    {
+      "seccion": "Tablas",
+      "nombre": "Queso",
+      "precio_media": "8.00",
+      "precio_entera": "15.00",
+      "disponible": true,
+      "orden": 4
+    },
+    {
+      "seccion": "Tostas",
+      "nombre": "Atún, guacamole, manzana y pan semilla",
+      "precio": "11.00",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Tostas",
+      "nombre": "Salmón, queso, mango y manzana",
+      "precio": "11.00",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Tostas",
+      "nombre": "Escalibada con feta",
+      "precio": "9.00",
+      "disponible": true,
+      "orden": 3
+    },
+    {
+      "seccion": "Hamburguesa",
+      "nombre": "Ternera",
+      "descripcion": "Mermelada de tomate, cebolla frita, queso curado, mezclum de lechuga y salsa miel mostaza en pan brioche. Acompañada de patatas.",
+      "precio": "12.00",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Hamburguesa",
+      "nombre": "Vegetariana",
+      "descripcion": "Mermelada de tomate, cebolla frita, queso curado, mezclum de lechuga y salsa miel mostaza en pan brioche. Acompañada de patatas.",
+      "precio": "12.00",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Costillas",
+      "descripcion": "Cerdo, salsa barbacoa, guacamole, tortitas. Acompañado con patata.",
+      "precio": "16.00",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Flamenquín",
+      "descripcion": "De cerdo y queso. Acompañado de patatas.",
+      "precio": "11.00",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Alitas con barbacoa",
+      "precio": "8.50",
+      "disponible": true,
+      "orden": 3
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Pollo Kentucky",
+      "precio_media": "6.75",
+      "precio_entera": "11.50",
+      "disponible": true,
+      "orden": 4
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Tiras de boniato con miel de caña",
+      "precio": "5.50",
+      "disponible": true,
+      "orden": 5
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Patatas con salsas variadas",
+      "precio": "7.00",
+      "disponible": true,
+      "orden": 6
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Croquetas de pollo",
+      "precio_media": "6.75",
+      "precio_entera": "11.50",
+      "disponible": true,
+      "orden": 7
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Croquetas vegetales",
+      "precio_media": "6.75",
+      "precio_entera": "11.50",
+      "disponible": true,
+      "orden": 8
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Crujientes de langostinos",
+      "precio_media": "5.50",
+      "precio_entera": "9.00",
+      "disponible": true,
+      "orden": 9
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Gyozas de verdura",
+      "precio_media": "6.00",
+      "precio_entera": "10.50",
+      "disponible": true,
+      "orden": 10
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Bao de chicharrón o carne desmechada",
+      "precio": "5.00",
+      "disponible": true,
+      "orden": 11
+    },
+    {
+      "seccion": "Compartimos",
+      "nombre": "Tacos de salmón, ceviche de gamba o carne desmechada",
+      "descripcion": "Opción sin gluten",
+      "precio": "4.00",
+      "disponible": true,
+      "orden": 12
+    },
+    {
+      "seccion": "Ensaladas",
+      "nombre": "Burrata",
+      "descripcion": "Guacamole, tomate, queso burrata, pesto, semillas mix y nachos",
+      "precio": "12.00",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Ensaladas",
+      "nombre": "Ensalada César",
+      "descripcion": "Mezclum de lechuga, picatostes, pollo, tomatitos cherrys, salsa césar parmesano, semillas. Opción vegetariana.",
+      "precio": "9.00",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Ensaladas",
+      "nombre": "Carpaccio gamba",
+      "descripcion": "Tomate, gamba, guacamole",
+      "precio": "14.00",
+      "disponible": true,
+      "orden": 3
+    },
+    {
+      "seccion": "Ensaladas",
+      "nombre": "Hummus",
+      "descripcion": "Verduras variadas y nachos",
+      "precio": "7.50",
+      "disponible": true,
+      "orden": 4
+    },
+    {
+      "seccion": "Pokes",
+      "nombre": "Pollo",
+      "descripcion": "Kentucky, pepino, arroz, mango, queso",
+      "precio": "11.50",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Pokes",
+      "nombre": "Atún",
+      "descripcion": "Atún, guacamole, mango, pepino",
+      "precio": "11.50",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Pokes",
+      "nombre": "Falafel",
+      "descripcion": "Mango, queso crema y pepino",
+      "precio": "11.50",
+      "disponible": true,
+      "orden": 3
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Empanada Carne",
+      "descripcion": "Mixta, cebolla, pimienta y huevo",
+      "precio": "—",
+      "disponible": true,
+      "orden": 1
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Choripán",
+      "descripcion": "Chorizo argentino y chimichurri",
+      "precio": "—",
+      "disponible": true,
+      "orden": 2
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Empanada Jamón y queso",
+      "descripcion": "Jamón cocido y queso mozzarella",
+      "precio": "—",
+      "disponible": true,
+      "orden": 3
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Empanada Vegana",
+      "descripcion": "Tofu, tomate natural, cebolla y pimiento",
+      "precio": "—",
+      "disponible": true,
+      "orden": 4
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Postre Vigilante",
+      "descripcion": "Queso y dulce",
+      "precio": "—",
+      "disponible": true,
+      "orden": 5
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Gourmet Cirjas",
+      "descripcion": "Ternera madura, cheddar, aceitunas negras y huevo",
+      "precio": "—",
+      "disponible": true,
+      "orden": 6
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Gourmet Provoleta",
+      "descripcion": "Pimiento asado, queso provolone, aceite y orégano",
+      "precio": "—",
+      "disponible": true,
+      "orden": 7
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Milanesa de pollo a la napolitana",
+      "descripcion": "Pollo, tomate natural, jamón cocido, queso havarti",
+      "precio": "—",
+      "disponible": true,
+      "orden": 8
+    },
+    {
+      "seccion": "Empanadas Argentinas y Milanesas",
+      "nombre": "Milanesa de ternera a la napolitana",
+      "descripcion": "Ternera, tomate natural, jamón cocido, queso havarti",
+      "precio": "—",
+      "disponible": true,
+      "orden": 9
+    }
+  ]
+}
