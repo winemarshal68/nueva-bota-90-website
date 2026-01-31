@@ -47,24 +47,29 @@ export default function MenuSection({ categories }: MenuSectionProps) {
           <div className="space-y-6">
             {category.items.map((item) => (
               <div key={item.id} className="group">
-                <div className="flex justify-between items-start gap-4 mb-2">
-                  <h3 className="text-xl font-semibold text-stone-900 group-hover:text-stone-700 transition-colors">
-                    {item.name}
-                  </h3>
-                  {item.price && (
-                    <span className="text-xl font-semibold text-stone-900 whitespace-nowrap">
-                      {item.price === '—' ? '—' : `€${item.price}`}
-                    </span>
-                  )}
-                  {item.priceHalf && item.priceFull && (
-                    <div className="text-xl font-semibold text-stone-900 whitespace-nowrap flex gap-3">
-                      <span className="text-sm text-stone-600 self-center">{halfLabel}</span>
-                      <span>€{item.priceHalf}</span>
-                      <span className="text-stone-400">|</span>
-                      <span className="text-sm text-stone-600 self-center">{fullLabel}</span>
-                      <span>€{item.priceFull}</span>
-                    </div>
-                  )}
+                <div className="grid grid-cols-[1fr_auto] gap-4 items-start mb-2">
+                  <div className="min-w-0">
+                    <h3 className="text-xl font-semibold text-stone-900 group-hover:text-stone-700 transition-colors">
+                      {item.name}
+                    </h3>
+                  </div>
+                  <div className="text-right whitespace-nowrap">
+                    {item.price && (
+                      <span className="text-xl font-semibold text-stone-900">
+                        {item.price === '—' ? '—' : `€${item.price}`}
+                      </span>
+                    )}
+                    {item.priceHalf && item.priceFull && (
+                      <div className="flex flex-col items-end">
+                        <span className="text-xl font-semibold text-stone-900">
+                          <span className="text-sm text-stone-600">{halfLabel}</span> €{item.priceHalf}
+                        </span>
+                        <span className="text-xl font-semibold text-stone-900">
+                          <span className="text-sm text-stone-600">{fullLabel}</span> €{item.priceFull}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 {item.description && (
                   <p className="text-stone-600 leading-relaxed">{item.description}</p>
