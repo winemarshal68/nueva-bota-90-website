@@ -15,13 +15,18 @@ type HealthCheckResult = {
   statusText: string;
   timestamp: string;
   error?: string;
+  // Enhanced diagnostics (only when fetchBody=true)
+  contentType?: string;
+  bodyPreview?: string;
+  parsedHeaders?: string[];
 };
 
 /**
  * Performs a HEAD request to check if a CSV URL is accessible
  * Returns status code and other diagnostic info
+ * @param fetchBody - If true, performs GET and returns body preview + headers
  */
-async function checkCSVHealth(url: string | undefined): Promise<HealthCheckResult> {
+async function checkCSVHealth(url: string | undefined, fetchBody = false): Promise<HealthCheckResult> {
   const timestamp = new Date().toISOString();
 
   if (!url || url.trim() === '') {
@@ -39,13 +44,13 @@ async function checkCSVHealth(url: string | undefined): Promise<HealthCheckResul
   const maskedUrl = maskUrl(url);
 
   try {
-    // Perform HEAD request to check accessibility without downloading content
+    // Perform HEAD or GET request based on fetchBody flag
     const response = await fetch(url, {
-      method: 'HEAD',
+      method: fetchBody ? 'GET' : 'HEAD',
       cache: 'no-store', // Don't use cache for health checks
     });
 
-    return {
+    const result: HealthCheckResult = {
       url,
       maskedUrl,
       status: response.status,
@@ -53,6 +58,26 @@ async function checkCSVHealth(url: string | undefined): Promise<HealthCheckResul
       timestamp,
       error: response.ok ? undefined : `HTTP ${response.status}: ${response.statusText}`,
     };
+
+    // Enhanced diagnostics when fetching body
+    if (fetchBody && response.ok) {
+      const contentType = response.headers.get('Content-Type') || 'unknown';
+      result.contentType = contentType;
+
+      try {
+        const bodyText = await response.text();
+        // First 200 characters for preview (safe from secrets/full docs)
+        result.bodyPreview = bodyText.slice(0, 200);
+
+        // Parse first line (CSV headers) by splitting on comma
+        const firstLine = bodyText.split('\n')[0];
+        result.parsedHeaders = firstLine ? firstLine.split(',').map(h => h.trim()) : [];
+      } catch (bodyError) {
+        result.error = `Failed to read response body: ${bodyError instanceof Error ? bodyError.message : String(bodyError)}`;
+      }
+    }
+
+    return result;
   } catch (error) {
     return {
       url,
@@ -92,7 +117,9 @@ export default async function AdminPage() {
   const vinosCSVUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
 
   // Perform CSV health checks
-  const cartaHealth = await checkCSVHealth(cartaCSVUrl);
+  // Carta: fetch body for enhanced diagnostics (Content-Type, headers, preview)
+  const cartaHealth = await checkCSVHealth(cartaCSVUrl, true);
+  // Vinos: HEAD only for basic connectivity check
   const vinosHealth = await checkCSVHealth(vinosCSVUrl);
 
   // Fetch current data for preview
@@ -220,6 +247,34 @@ export default async function AdminPage() {
                     {new Date(cartaHealth.timestamp).toLocaleString('es-ES')}
                   </p>
                 </div>
+
+                {/* Enhanced diagnostics */}
+                {cartaHealth.contentType && (
+                  <div>
+                    <span className="text-stone-600 font-medium">Content-Type:</span>
+                    <p className="text-xs text-stone-700 mt-1 font-mono bg-white/50 p-2 rounded">
+                      {cartaHealth.contentType}
+                    </p>
+                  </div>
+                )}
+
+                {cartaHealth.parsedHeaders && cartaHealth.parsedHeaders.length > 0 && (
+                  <div>
+                    <span className="text-stone-600 font-medium">CSV Headers (parsed):</span>
+                    <p className="text-xs text-stone-700 mt-1 font-mono bg-white/50 p-2 rounded">
+                      [{cartaHealth.parsedHeaders.join(', ')}]
+                    </p>
+                  </div>
+                )}
+
+                {cartaHealth.bodyPreview && (
+                  <div>
+                    <span className="text-stone-600 font-medium">Body Preview (first 200 chars):</span>
+                    <p className="text-xs text-stone-700 mt-1 font-mono bg-white/50 p-2 rounded whitespace-pre-wrap break-all">
+                      {cartaHealth.bodyPreview}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
