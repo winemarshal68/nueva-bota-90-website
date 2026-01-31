@@ -1,9 +1,88 @@
 import Link from 'next/link';
-import { ExternalLink, Database, FileText, Clock } from 'lucide-react';
+import { ExternalLink, Database, FileText, Clock, Activity } from 'lucide-react';
 import { fetchCartaData, fetchVinosData } from '@/lib/menuDataFetcher';
 
 // Admin page should always show fresh data
 export const revalidate = 0;
+
+/**
+ * Health check result for a CSV URL
+ */
+type HealthCheckResult = {
+  url: string;
+  maskedUrl: string;
+  status: number | null;
+  statusText: string;
+  timestamp: string;
+  error?: string;
+};
+
+/**
+ * Performs a HEAD request to check if a CSV URL is accessible
+ * Returns status code and other diagnostic info
+ */
+async function checkCSVHealth(url: string | undefined): Promise<HealthCheckResult> {
+  const timestamp = new Date().toISOString();
+
+  if (!url || url.trim() === '') {
+    return {
+      url: '',
+      maskedUrl: 'Not configured',
+      status: null,
+      statusText: 'URL not set',
+      timestamp,
+      error: 'CSV URL environment variable is not configured',
+    };
+  }
+
+  // Mask the URL for security (show domain + last 20 chars)
+  const maskedUrl = maskUrl(url);
+
+  try {
+    // Perform HEAD request to check accessibility without downloading content
+    const response = await fetch(url, {
+      method: 'HEAD',
+      cache: 'no-store', // Don't use cache for health checks
+    });
+
+    return {
+      url,
+      maskedUrl,
+      status: response.status,
+      statusText: response.statusText,
+      timestamp,
+      error: response.ok ? undefined : `HTTP ${response.status}: ${response.statusText}`,
+    };
+  } catch (error) {
+    return {
+      url,
+      maskedUrl,
+      status: null,
+      statusText: 'Request failed',
+      timestamp,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+/**
+ * Masks a URL for display, showing domain and last 20 characters
+ */
+function maskUrl(url: string): string {
+  try {
+    const urlObj = new URL(url);
+    const path = urlObj.pathname + urlObj.search;
+    if (path.length <= 30) {
+      return `${urlObj.hostname}${path}`;
+    }
+    const suffix = path.slice(-30);
+    return `${urlObj.hostname}/...${suffix}`;
+  } catch {
+    // If URL parsing fails, just show last 40 chars
+    if (url.length <= 50) return url;
+    return `...${url.slice(-50)}`;
+  }
+}
 
 export default async function AdminPage() {
   // Get Google Sheets URLs from environment variables
@@ -12,9 +91,17 @@ export default async function AdminPage() {
   const cartaCSVUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL;
   const vinosCSVUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
 
+  // Perform CSV health checks
+  const cartaHealth = await checkCSVHealth(cartaCSVUrl);
+  const vinosHealth = await checkCSVHealth(vinosCSVUrl);
+
   // Fetch current data for preview
-  const cartaItems = await fetchCartaData();
-  const vinosItems = await fetchVinosData();
+  const cartaResult = await fetchCartaData();
+  const vinosResult = await fetchVinosData();
+
+  // Extract data arrays (handle new FetchResult type)
+  const cartaItems = cartaResult.data;
+  const vinosItems = vinosResult.data;
 
   // Current server time for "last fetched" display
   const serverTime = new Date().toLocaleString('es-ES', {
@@ -62,6 +149,149 @@ export default async function AdminPage() {
             <p className="text-xs text-blue-700 mt-2">
               Política de caché: <strong>60 segundos</strong> (los cambios en Google Sheets aparecen en 1-2 minutos)
             </p>
+          </div>
+        </div>
+
+        {/* CSV Health Check */}
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-semibold text-stone-900 mb-6 flex items-center gap-2">
+            <Activity className="w-6 h-6" />
+            CSV Health Check
+          </h2>
+
+          <p className="text-sm text-stone-600 mb-6">
+            Diagnostica si las URLs de Google Sheets CSV son accesibles desde el servidor de Vercel.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Carta Health Check */}
+            <div className={`border-2 rounded-lg p-4 ${
+              cartaHealth.status === 200
+                ? 'border-green-300 bg-green-50'
+                : 'border-red-300 bg-red-50'
+            }`}>
+              <h3 className="font-semibold text-stone-900 mb-3 flex items-center gap-2">
+                Carta CSV
+                {cartaHealth.status === 200 ? (
+                  <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">✓ OK</span>
+                ) : (
+                  <span className="text-xs bg-red-600 text-white px-2 py-1 rounded">✗ ERROR</span>
+                )}
+              </h3>
+
+              <div className="space-y-2 text-sm">
+                <div>
+                  <span className="text-stone-600 font-medium">URL:</span>
+                  <p className="text-xs text-stone-700 break-all mt-1 font-mono bg-white/50 p-2 rounded">
+                    {cartaHealth.maskedUrl}
+                  </p>
+                </div>
+
+                <div>
+                  <span className="text-stone-600 font-medium">HTTP Status:</span>
+                  <p className={`text-sm font-semibold mt-1 ${
+                    cartaHealth.status === 200 ? 'text-green-700' : 'text-red-700'
+                  }`}>
+                    {cartaHealth.status !== null ? `${cartaHealth.status} ${cartaHealth.statusText}` : 'No response'}
+                  </p>
+                </div>
+
+                {cartaHealth.error && (
+                  <div>
+                    <span className="text-stone-600 font-medium">Error:</span>
+                    <p className="text-xs text-red-700 mt-1 break-words">
+                      {cartaHealth.error}
+                    </p>
+                  </div>
+                )}
+
+                {cartaResult.error && (
+                  <div>
+                    <span className="text-stone-600 font-medium">Fetch Error:</span>
+                    <p className="text-xs text-red-700 mt-1 break-words">
+                      {cartaResult.error}
+                    </p>
+                  </div>
+                )}
+
+                <div>
+                  <span className="text-stone-600 font-medium">Timestamp:</span>
+                  <p className="text-xs text-stone-700 mt-1">
+                    {new Date(cartaHealth.timestamp).toLocaleString('es-ES')}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Vinos Health Check */}
+            <div className={`border-2 rounded-lg p-4 ${
+              vinosHealth.status === 200
+                ? 'border-green-300 bg-green-50'
+                : 'border-red-300 bg-red-50'
+            }`}>
+              <h3 className="font-semibold text-stone-900 mb-3 flex items-center gap-2">
+                Vinos CSV
+                {vinosHealth.status === 200 ? (
+                  <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">✓ OK</span>
+                ) : (
+                  <span className="text-xs bg-red-600 text-white px-2 py-1 rounded">✗ ERROR</span>
+                )}
+              </h3>
+
+              <div className="space-y-2 text-sm">
+                <div>
+                  <span className="text-stone-600 font-medium">URL:</span>
+                  <p className="text-xs text-stone-700 break-all mt-1 font-mono bg-white/50 p-2 rounded">
+                    {vinosHealth.maskedUrl}
+                  </p>
+                </div>
+
+                <div>
+                  <span className="text-stone-600 font-medium">HTTP Status:</span>
+                  <p className={`text-sm font-semibold mt-1 ${
+                    vinosHealth.status === 200 ? 'text-green-700' : 'text-red-700'
+                  }`}>
+                    {vinosHealth.status !== null ? `${vinosHealth.status} ${vinosHealth.statusText}` : 'No response'}
+                  </p>
+                </div>
+
+                {vinosHealth.error && (
+                  <div>
+                    <span className="text-stone-600 font-medium">Error:</span>
+                    <p className="text-xs text-red-700 mt-1 break-words">
+                      {vinosHealth.error}
+                    </p>
+                  </div>
+                )}
+
+                {vinosResult.error && (
+                  <div>
+                    <span className="text-stone-600 font-medium">Fetch Error:</span>
+                    <p className="text-xs text-red-700 mt-1 break-words">
+                      {vinosResult.error}
+                    </p>
+                  </div>
+                )}
+
+                <div>
+                  <span className="text-stone-600 font-medium">Timestamp:</span>
+                  <p className="text-xs text-stone-700 mt-1">
+                    {new Date(vinosHealth.timestamp).toLocaleString('es-ES')}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Help text for common issues */}
+          <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <h4 className="font-semibold text-amber-900 mb-2">💡 Troubleshooting</h4>
+            <ul className="text-xs text-amber-800 space-y-1">
+              <li><strong>401 Unauthorized:</strong> Google Sheet is not published publicly. Go to File → Share → Publish to web</li>
+              <li><strong>403 Forbidden:</strong> Sheet sharing permissions may be restricted</li>
+              <li><strong>404 Not Found:</strong> CSV URL may be incorrect or sheet was deleted</li>
+              <li><strong>No response:</strong> Network error or invalid URL format</li>
+            </ul>
           </div>
         </div>
 
