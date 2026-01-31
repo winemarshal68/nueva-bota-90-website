@@ -17,6 +17,40 @@ El sitio web de Nueva Bota 90 está conectado a Google Sheets para que podáis a
 
 ---
 
+## 🔐 Cómo Acceder al Panel de Administración
+
+### Acceso Rápido a las Hojas de Google
+
+Para editar el menú de forma rápida y sencilla, utiliza el **Panel de Administración**:
+
+1. **URL del Panel:** Visita la página de administración de tu sitio web
+   - Ejemplo: `https://tu-sitio-web.vercel.app/admin`
+
+2. **Credenciales de acceso:**
+   - **Usuario:** `admin`
+   - **Contraseña:** (la que te proporcionó el desarrollador)
+
+3. **Inicio de sesión:**
+   - El navegador mostrará un cuadro de diálogo solicitando usuario y contraseña
+   - Introduce las credenciales y haz clic en "Iniciar sesión" o pulsa Enter
+
+### Panel de Administración
+
+Una vez dentro del panel, verás una interfaz sencilla con dos botones principales:
+
+- **Abrir hoja de la carta** → Te lleva directamente a la hoja de Google donde puedes editar el menú de comida
+- **Abrir hoja de vinos** → Te lleva directamente a la hoja de Google donde puedes editar la lista de vinos
+
+Los botones abrirán las hojas en una nueva pestaña del navegador para que puedas editar el contenido fácilmente.
+
+### ⏱️ Importante - Tiempo de Actualización
+
+**Los cambios pueden tardar hasta 1 hora en reflejarse en la web** debido al sistema de caché que optimiza la velocidad del sitio.
+
+Si necesitas que los cambios aparezcan de forma más inmediata, contacta con el equipo técnico.
+
+---
+
 ## Enlaces a las Hojas de Cálculo
 
 ### CARTA (Comida)
