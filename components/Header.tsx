@@ -24,7 +24,7 @@ export default function Header() {
             <img
               src="/logo.svg"
               alt="Nueva Bota 90"
-              className="h-12 md:h-16 w-auto"
+              className="h-16 md:h-24 w-auto"
             />
           </Link>
 
@@ -59,7 +59,7 @@ export default function Header() {
               href={t.links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-xs font-medium text-white bg-emerald-600 rounded-sm hover:bg-emerald-500 transition-colors tracking-wide shadow-sm"
+              className="px-4 py-2 text-xs font-medium text-white bg-emerald-700 rounded-sm hover:bg-emerald-600 transition-colors tracking-wide shadow-sm"
             >
               WhatsApp
             </a>
@@ -124,7 +124,7 @@ export default function Header() {
                   href={t.links.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-1.5 text-xs font-medium text-white bg-emerald-600 rounded-sm hover:bg-emerald-500 transition-colors tracking-wide shadow-sm"
+                  className="px-4 py-1.5 text-xs font-medium text-white bg-emerald-700 rounded-sm hover:bg-emerald-600 transition-colors tracking-wide shadow-sm"
                 >
                   WhatsApp
                 </a>

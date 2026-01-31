@@ -60,7 +60,7 @@ export default function Footer() {
                 href={t.links.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
+                className="flex items-center gap-2 text-emerald-700 hover:text-emerald-600 transition-colors duration-200"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp</span>
@@ -69,7 +69,7 @@ export default function Footer() {
                 href={t.links.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-rose-400 hover:text-rose-300 transition-colors"
+                className="flex items-center gap-2 text-rose-700 hover:text-rose-600 transition-colors duration-200"
               >
                 <Instagram className="w-5 h-5" />
                 <span>Instagram</span>
