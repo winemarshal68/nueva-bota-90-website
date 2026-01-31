@@ -414,7 +414,7 @@ export default async function AdminPage() {
           {/* Carta Preview */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-stone-900 mb-3">
-              Carta - Primeros 10 items
+              Carta - Todos los items
             </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-stone-200">
@@ -427,7 +427,7 @@ export default async function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartaItems.slice(0, 10).map((item, idx) => (
+                  {cartaItems.map((item, idx) => (
                     <tr key={idx} className="border-b border-stone-100">
                       <td className="px-3 py-2 text-stone-600">{item.seccion}</td>
                       <td className="px-3 py-2 text-stone-900">{item.nombre}</td>
@@ -444,17 +444,12 @@ export default async function AdminPage() {
                 </tbody>
               </table>
             </div>
-            {cartaItems.length > 10 && (
-              <p className="text-xs text-stone-500 mt-2">
-                ... y {cartaItems.length - 10} items más
-              </p>
-            )}
           </div>
 
           {/* Vinos Preview */}
           <div>
             <h3 className="text-lg font-semibold text-stone-900 mb-3">
-              Vinos - Primeros 10 items
+              Vinos - Todos los items
             </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-stone-200">
@@ -467,7 +462,7 @@ export default async function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {vinosItems.slice(0, 10).map((item, idx) => (
+                  {vinosItems.map((item, idx) => (
                     <tr key={idx} className="border-b border-stone-100">
                       <td className="px-3 py-2 text-stone-600">{item.seccion}</td>
                       <td className="px-3 py-2 text-stone-900">{item.nombre}</td>
@@ -482,11 +477,6 @@ export default async function AdminPage() {
                 </tbody>
               </table>
             </div>
-            {vinosItems.length > 10 && (
-              <p className="text-xs text-stone-500 mt-2">
-                ... y {vinosItems.length - 10} items más
-              </p>
-            )}
           </div>
         </div>
 
