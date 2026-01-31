@@ -65,7 +65,7 @@ export const i18n = {
     links: {
       whatsapp: 'https://wa.me/34XXXXXXXXX', // TODO: Replace with actual WhatsApp number
       phone: 'tel:+34XXXXXXXXX', // TODO: Replace with actual phone number
-      instagram: 'https://instagram.com/nuevabota90', // TODO: Replace with actual Instagram handle
+      instagram: 'https://www.instagram.com/nuevabota/',
       googleMaps: 'https://www.google.com/maps/search/?api=1&query=36.73377789153218,-3.73971882445825',
     },
   },
@@ -135,7 +135,7 @@ export const i18n = {
     links: {
       whatsapp: 'https://wa.me/34XXXXXXXXX', // TODO: Replace with actual WhatsApp number
       phone: 'tel:+34XXXXXXXXX', // TODO: Replace with actual phone number
-      instagram: 'https://instagram.com/nuevabota90', // TODO: Replace with actual Instagram handle
+      instagram: 'https://www.instagram.com/nuevabota/',
       googleMaps: 'https://www.google.com/maps/search/?api=1&query=36.73377789153218,-3.73971882445825',
     },
   },
