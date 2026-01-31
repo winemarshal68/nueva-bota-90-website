@@ -19,14 +19,13 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-b border-stone-200/60">
       <nav className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between h-24">
-          {/* Wordmark */}
-          <Link href="/" className="group flex items-baseline gap-2 hover:opacity-80 transition-opacity">
-            <span className="font-serif text-xl tracking-[0.15em] uppercase text-stone-900 font-medium">
-              Nueva Bota
-            </span>
-            <span className="inline-flex items-center justify-center w-9 h-5 bg-stone-900 text-white text-[10px] font-bold tracking-wider rounded-sm">
-              90
-            </span>
+          {/* Logo */}
+          <Link href="/" className="group hover:opacity-75 transition-opacity">
+            <img
+              src="/logo.svg"
+              alt="Nueva Bota 90"
+              className="h-7 md:h-[34px] w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}

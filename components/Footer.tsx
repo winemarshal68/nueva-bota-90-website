@@ -82,7 +82,11 @@ export default function Footer() {
         <div className="border-t border-stone-800 pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-stone-400 text-sm">{t.footer.rights}</p>
-            <div className="text-2xl font-serif font-bold">Nueva Bota 90</div>
+            <img
+              src="/logo.svg"
+              alt="Nueva Bota 90"
+              className="h-8 w-auto opacity-90"
+            />
           </div>
         </div>
       </div>

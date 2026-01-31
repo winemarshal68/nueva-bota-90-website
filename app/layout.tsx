@@ -19,6 +19,16 @@ export const metadata: Metadata = {
   title: "Nueva Bota 90 - Cocina Mediterránea Contemporánea en La Herradura",
   description: "Restaurante de cocina mediterránea contemporánea en La Herradura, Andalucía. Ingredientes frescos, técnicas refinadas y pasión por el buen comer.",
   keywords: "restaurante, La Herradura, Andalucía, cocina mediterránea, comida, reservas",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: "Nueva Bota 90",
     description: "Cocina mediterránea contemporánea en el corazón de La Herradura",
