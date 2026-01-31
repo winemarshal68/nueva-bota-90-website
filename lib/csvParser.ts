@@ -135,8 +135,8 @@ function parseRow(
       cartaField === 'precio_media' ||
       cartaField === 'precio_entera'
     ) {
-      const num = parsePrice(value);
-      if (num !== null) {
+      const num = parsePriceValue(value);
+      if (num !== undefined) {
         item[cartaField] = num.toFixed(2);
       }
     } else if (cartaField === 'orden') {
@@ -181,29 +181,67 @@ function parseBoolean(value: string): boolean {
 }
 
 /**
- * Converts a string to a number
- * Returns null for invalid or empty values
+ * Robust price parser that handles various input formats
+ * Accepts: number, string, or undefined
+ * Returns: number or undefined (never null, never defaults to 0)
+ *
+ * Handles:
+ * - Currency symbols (€, $, etc.)
+ * - European decimals (comma as decimal separator)
+ * - Whitespace
+ * - Empty/placeholder values
  */
-function parseNumber(value: string): number | null {
-  const trimmed = value.trim();
-
-  if (trimmed === '' || trimmed === '—' || trimmed === '-') {
-    return null;
+function parsePriceValue(value: string | number | undefined): number | undefined {
+  // Handle undefined/null
+  if (value === undefined || value === null) {
+    return undefined;
   }
 
-  // Handle both comma and dot as decimal separator
-  const normalized = trimmed.replace(',', '.');
+  // If already a number, return it if valid
+  if (typeof value === 'number') {
+    return isNaN(value) ? undefined : value;
+  }
+
+  // String processing
+  const trimmed = value.trim();
+
+  // Check for empty or placeholder values
+  if (trimmed === '' || trimmed === '—' || trimmed === '-') {
+    return undefined;
+  }
+
+  // Remove currency symbols (€, $, £, etc.) and any whitespace
+  const cleaned = trimmed
+    .replace(/[€$£¥₹]/g, '')
+    .replace(/\s+/g, '')
+    .trim();
+
+  // Handle European decimal format: replace comma with dot
+  // Only replace comma if it appears to be a decimal separator (not thousands)
+  // Example: "6,5" → "6.5" but "1.234,56" → "1234.56"
+  let normalized = cleaned;
+  if (cleaned.includes(',')) {
+    // If both comma and dot exist, assume European format (dot=thousands, comma=decimal)
+    if (cleaned.includes('.') && cleaned.includes(',')) {
+      normalized = cleaned.replace(/\./g, '').replace(',', '.');
+    } else {
+      // Only comma exists, treat it as decimal separator
+      normalized = cleaned.replace(',', '.');
+    }
+  }
+
   const num = parseFloat(normalized);
 
-  return isNaN(num) ? null : num;
+  return isNaN(num) ? undefined : num;
 }
 
 /**
- * Converts a string to a price number
- * Same as parseNumber but specifically for prices
+ * Converts a string to a number (for non-price fields like 'orden')
+ * Returns null for invalid or empty values (maintains backward compatibility)
  */
-function parsePrice(value: string): number | null {
-  return parseNumber(value);
+function parseNumber(value: string): number | null {
+  const result = parsePriceValue(value);
+  return result === undefined ? null : result;
 }
 
 /**
