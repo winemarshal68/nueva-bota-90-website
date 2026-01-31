@@ -158,6 +158,61 @@ export default async function AdminPage() {
           </p>
         </div>
 
+        {/* Primary Action: Edit Google Sheets */}
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-semibold text-stone-900 mb-6">
+            Editar Hojas de Google
+          </h2>
+
+          <p className="text-stone-600 mb-8">
+            Haz clic en los botones de abajo para abrir las hojas de Google donde puedes editar el contenido del menú.
+          </p>
+
+          {/* Buttons */}
+          <div className="space-y-4">
+            {/* Carta button */}
+            {cartaEditUrl ? (
+              <a
+                href={cartaEditUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
+              >
+                <span className="text-lg">Abrir hoja de la carta</span>
+                <ExternalLink className="w-5 h-5" />
+              </a>
+            ) : (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
+                ⚠️ URL de la carta no configurada
+              </div>
+            )}
+
+            {/* Vinos button */}
+            {vinosEditUrl ? (
+              <a
+                href={vinosEditUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
+              >
+                <span className="text-lg">Abrir hoja de vinos</span>
+                <ExternalLink className="w-5 h-5" />
+              </a>
+            ) : (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
+                ⚠️ URL de vinos no configurada
+              </div>
+            )}
+          </div>
+
+          {/* Info note */}
+          <div className="mt-8 bg-green-50 border border-green-300 rounded-lg p-4">
+            <p className="text-green-800 text-sm">
+              <strong>✓ Actualización rápida:</strong> Los cambios que hagas en las hojas se reflejarán en la web en aproximadamente 1-2 minutos.
+            </p>
+          </div>
+        </div>
+
         {/* Cache Status */}
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-semibold text-stone-900 mb-6 flex items-center gap-2">
@@ -483,61 +538,6 @@ export default async function AdminPage() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
-          <h2 className="text-2xl font-semibold text-stone-900 mb-6">
-            Editar Hojas de Google
-          </h2>
-
-          <p className="text-stone-600 mb-8">
-            Haz clic en los botones de abajo para abrir las hojas de Google donde puedes editar el contenido del menú.
-          </p>
-
-          {/* Buttons */}
-          <div className="space-y-4">
-            {/* Carta button */}
-            {cartaEditUrl ? (
-              <a
-                href={cartaEditUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
-              >
-                <span className="text-lg">Abrir hoja de la carta</span>
-                <ExternalLink className="w-5 h-5" />
-              </a>
-            ) : (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
-                ⚠️ URL de la carta no configurada
-              </div>
-            )}
-
-            {/* Vinos button */}
-            {vinosEditUrl ? (
-              <a
-                href={vinosEditUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
-              >
-                <span className="text-lg">Abrir hoja de vinos</span>
-                <ExternalLink className="w-5 h-5" />
-              </a>
-            ) : (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
-                ⚠️ URL de vinos no configurada
-              </div>
-            )}
-          </div>
-
-          {/* Info note */}
-          <div className="mt-8 bg-green-50 border border-green-300 rounded-lg p-4">
-            <p className="text-green-800 text-sm">
-              <strong>✓ Actualización rápida:</strong> Los cambios que hagas en las hojas se reflejarán en la web en aproximadamente 1-2 minutos.
-            </p>
           </div>
         </div>
 
