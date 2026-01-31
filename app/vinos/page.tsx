@@ -5,8 +5,8 @@ import { getServerLanguage } from '@/lib/getServerLanguage';
 import { fetchVinosData } from '@/lib/menuDataFetcher';
 import type { ItemCarta } from '@/types/menu';
 
-// Revalidate every 60 seconds (1 minute) for faster wine list updates
-export const revalidate = 60;
+// Force runtime rendering to prevent build-time prerender failures
+export const dynamic = "force-dynamic";
 
 export default async function WinePage({
   searchParams,
@@ -18,10 +18,20 @@ export default async function WinePage({
 
   // For Spanish: fetch from Google Sheets CSV with JSON fallback
   // For English: use existing wine.en.json (no changes)
-  const wineData =
-    language === 'es'
-      ? transformVinosToMenu(await fetchVinosData())
-      : wineEN;
+  let fetchError: string | undefined;
+  let wineData;
+
+  if (language === 'es') {
+    const result = await fetchVinosData();
+    if (result.error || result.data.length === 0) {
+      fetchError = result.error;
+      wineData = { categories: [] };
+    } else {
+      wineData = transformVinosToMenu(result.data);
+    }
+  } else {
+    wineData = wineEN;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -39,7 +49,17 @@ export default async function WinePage({
 
       {/* Wine Content */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <MenuSection categories={wineData.categories} />
+        {fetchError ? (
+          <div className="max-w-4xl mx-auto text-center py-12">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-8">
+              <p className="text-lg text-stone-700">
+                Menú temporalmente no disponible. Inténtalo de nuevo en unos minutos.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <MenuSection categories={wineData.categories} />
+        )}
       </section>
     </div>
   );

@@ -11,24 +11,32 @@ const isVercelDeployment = process.env.VERCEL === '1';
 const allowLocalFallback = !isVercelDeployment;
 
 /**
+ * Result type for data fetching - allows graceful error handling
+ */
+export type FetchResult<T> = {
+  data: T;
+  error?: string;
+};
+
+/**
  * Fetches carta (food menu) data from Google Sheets CSV
  *
- * PRODUCTION: REQUIRES Google Sheets CSV URL - throws error if missing or fetch fails
+ * PRODUCTION: Returns empty array with error message if fetch fails (non-fatal)
  * DEVELOPMENT: Falls back to local JSON for easier local testing
  */
-export async function fetchCartaData(): Promise<ItemCarta[]> {
+export async function fetchCartaData(): Promise<FetchResult<ItemCarta[]>> {
   const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL;
 
   // PRODUCTION: CSV URL is REQUIRED
   if (!csvUrl || csvUrl.trim() === '') {
     if (allowLocalFallback) {
       console.warn('[Menu Fetcher] [DEV ONLY] No CARTA CSV URL configured, using local JSON fallback');
-      return cartaItemsData.items as ItemCarta[];
+      return { data: cartaItemsData.items as ItemCarta[] };
     }
 
-    const error = new Error('NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL is required in production');
-    console.error('[Menu Fetcher] PRODUCTION ERROR:', error);
-    throw error;
+    const errorMsg = 'NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL is not configured';
+    console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+    return { data: [], error: errorMsg };
   }
 
   try {
@@ -38,7 +46,9 @@ export async function fetchCartaData(): Promise<ItemCarta[]> {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const errorMsg = `Failed to fetch menu: HTTP ${response.status} ${response.statusText}. URL: ${csvUrl}. Hint: Check Google Sheets sharing permissions.`;
+      console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+      return { data: [], error: errorMsg };
     }
 
     const csvText = await response.text();
@@ -47,46 +57,49 @@ export async function fetchCartaData(): Promise<ItemCarta[]> {
     const items = parseCartaCSV(csvText);
 
     if (items.length === 0) {
-      throw new Error('Parsed CSV has no valid items');
+      const errorMsg = 'Parsed CSV has no valid items';
+      console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+      return { data: [], error: errorMsg };
     }
 
     console.log(`[Menu Fetcher] Loaded ${items.length} carta items from CSV`);
-    return items;
+    return { data: items };
   } catch (error) {
     // DEVELOPMENT: Allow fallback to stale local JSON for convenience
     if (allowLocalFallback) {
       console.warn('[Menu Fetcher] [DEV ONLY] Failed to load CARTA CSV, using local JSON fallback:', error);
-      return cartaItemsData.items as ItemCarta[];
+      return { data: cartaItemsData.items as ItemCarta[] };
     }
 
-    // PRODUCTION: DO NOT hide failures - expose them so they can be fixed
-    console.error('[Menu Fetcher] PRODUCTION ERROR: Failed to load CARTA CSV from Google Sheets:', error);
-    throw error;
+    // PRODUCTION: Return empty array with error instead of throwing
+    const errorMsg = `Failed to load menu data: ${error instanceof Error ? error.message : String(error)}`;
+    console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+    return { data: [], error: errorMsg };
   }
 }
 
 /**
  * Fetches vinos (wine menu) data from Google Sheets CSV
  *
- * PRODUCTION: REQUIRES Google Sheets CSV URL - throws error if missing or fetch fails
+ * PRODUCTION: Returns empty array with error message if fetch fails (non-fatal)
  * DEVELOPMENT: Falls back to local JSON for easier local testing
  *
  * Note: wine.es.json has a different structure (categories with nested items)
  * This function returns ItemCarta[] for consistency
  */
-export async function fetchVinosData(): Promise<ItemCarta[]> {
+export async function fetchVinosData(): Promise<FetchResult<ItemCarta[]>> {
   const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
 
   // PRODUCTION: CSV URL is REQUIRED
   if (!csvUrl || csvUrl.trim() === '') {
     if (allowLocalFallback) {
       console.warn('[Menu Fetcher] [DEV ONLY] No VINOS CSV URL configured, using local JSON fallback');
-      return convertWineJSONToItemCarta(wineESData);
+      return { data: convertWineJSONToItemCarta(wineESData) };
     }
 
-    const error = new Error('NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL is required in production');
-    console.error('[Menu Fetcher] PRODUCTION ERROR:', error);
-    throw error;
+    const errorMsg = 'NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL is not configured';
+    console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+    return { data: [], error: errorMsg };
   }
 
   try {
@@ -96,7 +109,9 @@ export async function fetchVinosData(): Promise<ItemCarta[]> {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const errorMsg = `Failed to fetch wine list: HTTP ${response.status} ${response.statusText}. URL: ${csvUrl}. Hint: Check Google Sheets sharing permissions.`;
+      console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+      return { data: [], error: errorMsg };
     }
 
     const csvText = await response.text();
@@ -105,21 +120,24 @@ export async function fetchVinosData(): Promise<ItemCarta[]> {
     const items = parseVinosCSV(csvText);
 
     if (items.length === 0) {
-      throw new Error('Parsed CSV has no valid items');
+      const errorMsg = 'Parsed CSV has no valid items';
+      console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+      return { data: [], error: errorMsg };
     }
 
     console.log(`[Menu Fetcher] Loaded ${items.length} vinos items from CSV`);
-    return items;
+    return { data: items };
   } catch (error) {
     // DEVELOPMENT: Allow fallback to stale local JSON for convenience
     if (allowLocalFallback) {
       console.warn('[Menu Fetcher] [DEV ONLY] Failed to load VINOS CSV, using local JSON fallback:', error);
-      return convertWineJSONToItemCarta(wineESData);
+      return { data: convertWineJSONToItemCarta(wineESData) };
     }
 
-    // PRODUCTION: DO NOT hide failures - expose them so they can be fixed
-    console.error('[Menu Fetcher] PRODUCTION ERROR: Failed to load VINOS CSV from Google Sheets:', error);
-    throw error;
+    // PRODUCTION: Return empty array with error instead of throwing
+    const errorMsg = `Failed to load wine data: ${error instanceof Error ? error.message : String(error)}`;
+    console.error('[Menu Fetcher] PRODUCTION ERROR:', errorMsg);
+    return { data: [], error: errorMsg };
   }
 }
 

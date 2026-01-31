@@ -6,8 +6,8 @@ import { getServerLanguage } from '@/lib/getServerLanguage';
 import { fetchCartaData } from '@/lib/menuDataFetcher';
 import type { ItemCarta } from '@/types/menu';
 
-// Revalidate every 60 seconds (1 minute) for faster menu updates
-export const revalidate = 60;
+// Force runtime rendering to prevent build-time prerender failures
+export const dynamic = "force-dynamic";
 
 export default async function MenuPage({
   searchParams,
@@ -19,10 +19,20 @@ export default async function MenuPage({
 
   // For Spanish: fetch from Google Sheets CSV with JSON fallback
   // For English: use existing menu.en.json (no changes)
-  const menuData =
-    language === 'es'
-      ? transformCartaToMenu(await fetchCartaData())
-      : menuEN;
+  let fetchError: string | undefined;
+  let menuData;
+
+  if (language === 'es') {
+    const result = await fetchCartaData();
+    if (result.error || result.data.length === 0) {
+      fetchError = result.error;
+      menuData = { categories: [] };
+    } else {
+      menuData = transformCartaToMenu(result.data);
+    }
+  } else {
+    menuData = menuEN;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -40,7 +50,17 @@ export default async function MenuPage({
 
       {/* Menu Content */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <MenuSection categories={menuData.categories} />
+        {fetchError ? (
+          <div className="max-w-4xl mx-auto text-center py-12">
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-8">
+              <p className="text-lg text-stone-700">
+                Menú temporalmente no disponible. Inténtalo de nuevo en unos minutos.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <MenuSection categories={menuData.categories} />
+        )}
       </section>
     </div>
   );
