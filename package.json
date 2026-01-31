@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "images": "node scripts/generate-image-manifest.js",
-    "prebuild": "npm run images"
+    "prebuild": "npm run images",
+    "seed:export": "tsx scripts/export-seed-csv.ts"
   },
   "dependencies": {
     "lucide-react": "^0.563.0",
@@ -24,6 +25,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }
