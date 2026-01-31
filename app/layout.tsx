@@ -38,7 +38,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
         <LanguageProvider>
           <Header />
-          <main className="pt-20">
+          <main className="pt-28">
             {children}
           </main>
           <Footer />

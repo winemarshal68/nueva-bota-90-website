@@ -60,7 +60,7 @@ export default function Footer() {
                 href={t.links.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-stone-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp</span>
@@ -69,7 +69,7 @@ export default function Footer() {
                 href={t.links.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-stone-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-rose-400 hover:text-rose-300 transition-colors"
               >
                 <Instagram className="w-5 h-5" />
                 <span>Instagram</span>
@@ -81,11 +81,13 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-stone-800 pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-stone-400 text-sm">{t.footer.rights}</p>
+            <p className="text-stone-400 text-sm">
+              © {new Date().getFullYear()} Nueva Bota 90. {language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
+            </p>
             <img
               src="/logo.svg"
               alt="Nueva Bota 90"
-              className="h-8 w-auto opacity-90"
+              className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity"
             />
           </div>
         </div>

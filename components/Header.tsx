@@ -18,13 +18,13 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-b border-stone-200/60">
       <nav className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-28">
           {/* Logo */}
           <Link href="/" className="group hover:opacity-75 transition-opacity">
             <img
               src="/logo.svg"
               alt="Nueva Bota 90"
-              className="h-7 md:h-[34px] w-auto"
+              className="h-12 md:h-16 w-auto"
             />
           </Link>
 
@@ -59,7 +59,7 @@ export default function Header() {
               href={t.links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-xs font-medium text-white bg-stone-900 rounded-sm hover:bg-stone-800 transition-colors tracking-wide"
+              className="px-4 py-2 text-xs font-medium text-white bg-emerald-600 rounded-sm hover:bg-emerald-500 transition-colors tracking-wide shadow-sm"
             >
               WhatsApp
             </a>
@@ -124,7 +124,7 @@ export default function Header() {
                   href={t.links.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-1.5 text-xs font-medium text-white bg-stone-900 rounded-sm hover:bg-stone-800 transition-colors tracking-wide"
+                  className="px-4 py-1.5 text-xs font-medium text-white bg-emerald-600 rounded-sm hover:bg-emerald-500 transition-colors tracking-wide shadow-sm"
                 >
                   WhatsApp
                 </a>
