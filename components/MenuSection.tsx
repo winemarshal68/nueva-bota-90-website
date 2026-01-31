@@ -54,12 +54,11 @@ export default function MenuSection({ categories }: MenuSectionProps) {
                     </h3>
                   </div>
                   <div className="text-right whitespace-nowrap">
-                    {item.price && (
+                    {item.price ? (
                       <span className="text-xl font-semibold text-stone-900">
                         {item.price === '—' ? '—' : `€${item.price}`}
                       </span>
-                    )}
-                    {item.priceHalf && item.priceFull && (
+                    ) : item.priceHalf && item.priceFull ? (
                       <div className="flex flex-col items-end">
                         <span className="text-xl font-semibold text-stone-900">
                           <span className="text-sm text-stone-600">{halfLabel}</span> €{item.priceHalf}
@@ -68,7 +67,7 @@ export default function MenuSection({ categories }: MenuSectionProps) {
                           <span className="text-sm text-stone-600">{fullLabel}</span> €{item.priceFull}
                         </span>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
                 {item.description && (

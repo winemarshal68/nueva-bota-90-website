@@ -147,7 +147,7 @@ export default async function AdminPage() {
                       <td className="px-3 py-2 text-stone-600">{item.seccion}</td>
                       <td className="px-3 py-2 text-stone-900">{item.nombre}</td>
                       <td className="px-3 py-2 text-stone-600">
-                        {item.precio || `${item.precio_media}/${item.precio_entera}` || '—'}
+                        {item.precio || (item.precio_media && item.precio_entera ? `${item.precio_media}/${item.precio_entera}` : '—')}
                       </td>
                       <td className="px-3 py-2">
                         <span className={`text-xs px-2 py-1 rounded ${item.disponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
