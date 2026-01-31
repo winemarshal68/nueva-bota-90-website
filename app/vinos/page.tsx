@@ -5,6 +5,9 @@ import { getServerLanguage } from '@/lib/getServerLanguage';
 import { fetchVinosData } from '@/lib/menuDataFetcher';
 import type { ItemCarta } from '@/types/menu';
 
+// Revalidate every 60 seconds (1 minute) for faster wine list updates
+export const revalidate = 60;
+
 export default async function WinePage({
   searchParams,
 }: {

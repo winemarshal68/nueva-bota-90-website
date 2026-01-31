@@ -6,6 +6,9 @@ import { getServerLanguage } from '@/lib/getServerLanguage';
 import { fetchCartaData } from '@/lib/menuDataFetcher';
 import type { ItemCarta } from '@/types/menu';
 
+// Revalidate every 60 seconds (1 minute) for faster menu updates
+export const revalidate = 60;
+
 export default async function MenuPage({
   searchParams,
 }: {

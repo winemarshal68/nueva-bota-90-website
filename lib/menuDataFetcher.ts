@@ -17,9 +17,9 @@ export async function fetchCartaData(): Promise<ItemCarta[]> {
   }
 
   try {
-    // Fetch CSV with 1-hour cache
+    // Fetch CSV with 1-minute cache for faster updates
     const response = await fetch(csvUrl, {
-      next: { revalidate: 3600 }, // 1 hour
+      next: { revalidate: 60 }, // 1 minute
     });
 
     if (!response.ok) {
@@ -60,9 +60,9 @@ export async function fetchVinosData(): Promise<ItemCarta[]> {
   }
 
   try {
-    // Fetch CSV with 1-hour cache
+    // Fetch CSV with 1-minute cache for faster updates
     const response = await fetch(csvUrl, {
-      next: { revalidate: 3600 }, // 1 hour
+      next: { revalidate: 60 }, // 1 minute
     });
 
     if (!response.ok) {

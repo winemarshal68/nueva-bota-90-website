@@ -1,6 +1,9 @@
 import Link from 'next/link';
-import { ExternalLink, Database, FileText } from 'lucide-react';
+import { ExternalLink, Database, FileText, Clock } from 'lucide-react';
 import { fetchCartaData, fetchVinosData } from '@/lib/menuDataFetcher';
+
+// Admin page should always show fresh data
+export const revalidate = 0;
 
 export default async function AdminPage() {
   // Get Google Sheets URLs from environment variables
@@ -12,6 +15,13 @@ export default async function AdminPage() {
   // Fetch current data for preview
   const cartaItems = await fetchCartaData();
   const vinosItems = await fetchVinosData();
+
+  // Current server time for "last fetched" display
+  const serverTime = new Date().toLocaleString('es-ES', {
+    timeZone: 'Europe/Madrid',
+    dateStyle: 'medium',
+    timeStyle: 'medium'
+  });
 
   // Determine data sources
   const cartaSource = cartaCSVUrl && cartaCSVUrl.trim() !== ''
@@ -32,6 +42,27 @@ export default async function AdminPage() {
           <p className="text-lg text-stone-600">
             Gestiona el contenido de la carta y la lista de vinos
           </p>
+        </div>
+
+        {/* Cache Status */}
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-semibold text-stone-900 mb-6 flex items-center gap-2">
+            <Clock className="w-6 h-6" />
+            Estado de Caché
+          </h2>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="w-4 h-4 text-blue-700" />
+              <span className="font-semibold text-blue-900">Última actualización</span>
+            </div>
+            <p className="text-sm text-blue-800">
+              Datos obtenidos del servidor a las: <strong>{serverTime}</strong>
+            </p>
+            <p className="text-xs text-blue-700 mt-2">
+              Política de caché: <strong>60 segundos</strong> (los cambios en Google Sheets aparecen en 1-2 minutos)
+            </p>
+          </div>
         </div>
 
         {/* Data Source Status */}
@@ -222,9 +253,9 @@ export default async function AdminPage() {
           </div>
 
           {/* Info note */}
-          <div className="mt-8 bg-stone-100 border border-stone-300 rounded-lg p-4">
-            <p className="text-stone-700 text-sm">
-              <strong>Nota:</strong> Los cambios que hagas en las hojas pueden tardar hasta 1 hora en reflejarse en la web debido al sistema de caché.
+          <div className="mt-8 bg-green-50 border border-green-300 rounded-lg p-4">
+            <p className="text-green-800 text-sm">
+              <strong>✓ Actualización rápida:</strong> Los cambios que hagas en las hojas se reflejarán en la web en aproximadamente 1-2 minutos.
             </p>
           </div>
         </div>
@@ -253,7 +284,7 @@ export default async function AdminPage() {
               </li>
               <li className="flex items-start">
                 <span className="mr-2">•</span>
-                <span><strong>Los cambios pueden tardar hasta 1 hora</strong> en aparecer en la web</span>
+                <span><strong>Los cambios aparecen en 1-2 minutos</strong> en la web (caché de 60 segundos)</span>
               </li>
             </ul>
           </div>
@@ -277,7 +308,7 @@ export default async function AdminPage() {
             </li>
             <li className="flex items-start">
               <span className="text-stone-900 font-semibold mr-2">5.</span>
-              <span>Espera hasta 1 hora para ver los cambios reflejados en la web (debido al sistema de caché).</span>
+              <span>Espera 1-2 minutos para ver los cambios reflejados en la web (actualización rápida).</span>
             </li>
           </ul>
 
