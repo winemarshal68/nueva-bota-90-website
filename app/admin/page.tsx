@@ -213,6 +213,65 @@ export default async function AdminPage() {
           </div>
         </div>
 
+        {/* Instructions */}
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
+          <h3 className="text-xl font-semibold text-stone-900 mb-4">
+            Instrucciones
+          </h3>
+
+          {/* Important notes */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+            <h4 className="font-semibold text-amber-900 mb-3">⚠️ Importante</h4>
+            <ul className="space-y-2 text-sm text-amber-800">
+              <li className="flex items-start">
+                <span className="mr-2">•</span>
+                <span><strong>La hoja ya viene pre-rellenada</strong> con los datos actuales del menú</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">•</span>
+                <span><strong>No borres las cabeceras</strong> (primera fila con nombres de columnas)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">•</span>
+                <span><strong>Para ocultar un item</strong>, pon disponible=FALSE (no borres la fila completa)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">•</span>
+                <span><strong>Los cambios aparecen en 1-2 minutos</strong> en la web (caché de 60 segundos)</span>
+              </li>
+            </ul>
+          </div>
+
+          <ul className="space-y-3 text-stone-600">
+            <li className="flex items-start">
+              <span className="text-stone-900 font-semibold mr-2">1.</span>
+              <span>Haz clic en el botón correspondiente para abrir la hoja de Google.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-stone-900 font-semibold mr-2">2.</span>
+              <span>Edita el contenido directamente en la hoja (nombre, descripción, precio, etc.).</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-stone-900 font-semibold mr-2">3.</span>
+              <span>Para ocultar temporalmente un plato o vino, cambia la columna &quot;disponible&quot; a FALSE.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-stone-900 font-semibold mr-2">4.</span>
+              <span>Los cambios se guardan automáticamente en Google Sheets.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-stone-900 font-semibold mr-2">5.</span>
+              <span>Espera 1-2 minutos para ver los cambios reflejados en la web (actualización rápida).</span>
+            </li>
+          </ul>
+
+          <div className="mt-6 pt-6 border-t border-stone-200">
+            <p className="text-sm text-stone-500">
+              Si necesitas añadir nuevos items, simplemente añade una nueva fila al final de la hoja y rellena todas las columnas.
+            </p>
+          </div>
+        </div>
+
         {/* Cache Status */}
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
           <h2 className="text-2xl font-semibold text-stone-900 mb-6 flex items-center gap-2">
@@ -538,65 +597,6 @@ export default async function AdminPage() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-
-        {/* Additional instructions */}
-        <div className="bg-white shadow-lg rounded-lg p-8">
-          <h3 className="text-xl font-semibold text-stone-900 mb-4">
-            Instrucciones
-          </h3>
-
-          {/* Important notes */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-            <h4 className="font-semibold text-amber-900 mb-3">⚠️ Importante</h4>
-            <ul className="space-y-2 text-sm text-amber-800">
-              <li className="flex items-start">
-                <span className="mr-2">•</span>
-                <span><strong>La hoja ya viene pre-rellenada</strong> con los datos actuales del menú</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2">•</span>
-                <span><strong>No borres las cabeceras</strong> (primera fila con nombres de columnas)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2">•</span>
-                <span><strong>Para ocultar un item</strong>, pon disponible=FALSE (no borres la fila completa)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2">•</span>
-                <span><strong>Los cambios aparecen en 1-2 minutos</strong> en la web (caché de 60 segundos)</span>
-              </li>
-            </ul>
-          </div>
-
-          <ul className="space-y-3 text-stone-600">
-            <li className="flex items-start">
-              <span className="text-stone-900 font-semibold mr-2">1.</span>
-              <span>Haz clic en el botón correspondiente para abrir la hoja de Google.</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-stone-900 font-semibold mr-2">2.</span>
-              <span>Edita el contenido directamente en la hoja (nombre, descripción, precio, etc.).</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-stone-900 font-semibold mr-2">3.</span>
-              <span>Para ocultar temporalmente un plato o vino, cambia la columna &quot;disponible&quot; a FALSE.</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-stone-900 font-semibold mr-2">4.</span>
-              <span>Los cambios se guardan automáticamente en Google Sheets.</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-stone-900 font-semibold mr-2">5.</span>
-              <span>Espera 1-2 minutos para ver los cambios reflejados en la web (actualización rápida).</span>
-            </li>
-          </ul>
-
-          <div className="mt-6 pt-6 border-t border-stone-200">
-            <p className="text-sm text-stone-500">
-              Si necesitas añadir nuevos items, simplemente añade una nueva fila al final de la hoja y rellena todas las columnas.
-            </p>
           </div>
         </div>
 
