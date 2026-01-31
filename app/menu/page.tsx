@@ -1,22 +1,25 @@
-'use client';
-
-import { useLanguage } from '@/hooks/useLanguage';
 import { i18n } from '@/content/i18n';
 import MenuSection from '@/components/MenuSection';
 import menuEN from '@/content/menu.en.json';
-import cartaItemsData from '@/data/carta_items.json';
 import { groupMenuItems, sectionMetadata } from '@/lib/menuData';
+import { getServerLanguage } from '@/lib/getServerLanguage';
+import { fetchCartaData } from '@/lib/menuDataFetcher';
 import type { ItemCarta } from '@/types/menu';
 
-export default function MenuPage() {
-  const { language } = useLanguage();
+export default async function MenuPage({
+  searchParams,
+}: {
+  searchParams: { lang?: string };
+}) {
+  const language = getServerLanguage(searchParams);
   const t = i18n[language];
 
-  // For Spanish: use new data model from carta_items.json
-  // For English: use existing menu.en.json
-  const menuData = language === 'es'
-    ? transformCartaToMenu(cartaItemsData.items as ItemCarta[])
-    : menuEN;
+  // For Spanish: fetch from Google Sheets CSV with JSON fallback
+  // For English: use existing menu.en.json (no changes)
+  const menuData =
+    language === 'es'
+      ? transformCartaToMenu(await fetchCartaData())
+      : menuEN;
 
   return (
     <div className="min-h-screen bg-white">

@@ -8,20 +8,22 @@ A modern, bilingual restaurant website built with Next.js, TypeScript, and Tailw
 
 ## Features
 
-- ✨ **Bilingual (ES/EN)** - Language toggle with localStorage persistence
+- ✨ **Bilingual (ES/EN)** - Language toggle with localStorage and URL params
 - 📱 **Mobile-First Design** - Responsive on all devices
 - 🎨 **Premium Layout** - Modern, agency-grade design
-- 🍷 **Dynamic Menu & Wine Lists** - Easy to edit JSON files
+- 🍷 **Dynamic Menu & Wine Lists** - Google Sheets integration or JSON files
+- 📊 **Google Sheets Integration** - Update menu directly from spreadsheets
 - 🖼️ **Photo-Ready** - Optimized for stunning food photography
-- ⚡ **Fast & SEO-Optimized** - Static generation with Next.js
-- 🎯 **Zero Config Deployment** - No environment variables needed
+- ⚡ **Fast & SEO-Optimized** - Server-side rendering with 1-hour cache
+- 🔄 **Automatic Fallback** - Uses local JSON if Google Sheets unavailable
 
 ## Tech Stack
 
-- Next.js 15 (App Router)
+- Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS
 - lucide-react (icons)
+- Google Sheets CSV integration
 - Vercel-ready
 
 ## Local Development
@@ -41,6 +43,71 @@ npm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
+
+## Google Sheets Integration
+
+The menu and wine list can be managed directly from Google Sheets for easy updates without code changes.
+
+### How It Works
+
+1. **Spanish Menu/Wines**: Loaded from published Google Sheets CSV URLs
+2. **English Menu/Wines**: Remains in local JSON files
+3. **Automatic Updates**: Changes appear on the website within 1 hour
+4. **Smart Fallback**: If Google Sheets is unavailable, uses local JSON files
+
+### Setup Instructions
+
+1. **Create Environment Variables**
+
+Copy `.env.example` to `.env.local`:
+```bash
+cp .env.example .env.local
+```
+
+2. **Add Google Sheets URLs**
+
+Edit `.env.local` and add your published CSV URLs:
+```env
+NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL=https://docs.google.com/.../pub?gid=0&single=true&output=csv
+NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL=https://docs.google.com/.../pub?gid=204872942&single=true&output=csv
+```
+
+3. **Publish Your Google Sheets**
+
+For each sheet (CARTA and VINOS):
+- Open Google Sheets
+- File → Share → Publish to web
+- Select the specific sheet
+- Format: **Comma-separated values (.csv)**
+- Click **Publish**
+- Copy the URL to `.env.local`
+
+4. **Configure Vercel**
+
+In Vercel Dashboard → Project → Settings → Environment Variables:
+- Add both `NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL` and `NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL`
+- Set for: Production, Preview, Development
+- Redeploy after adding
+
+### CSV Structure
+
+**CARTA (Food Menu):**
+- Columns: `seccion`, `nombre`, `descripcion`, `precio`, `precio_media`, `precio_entera`, `disponible`, `orden`
+
+**VINOS (Wine Menu):**
+- Columns: `categoria`, `nombre`, `descripcion`, `origen`, `precio`, `disponible`, `orden`
+
+### Owner Documentation
+
+📖 **Full Spanish instructions for restaurant owners:**
+See [docs/GOOGLE_SHEETS_INSTRUCCIONES.md](docs/GOOGLE_SHEETS_INSTRUCCIONES.md)
+
+This comprehensive guide (in Spanish) explains:
+- How to edit the menu
+- How to hide/show items
+- Price formatting
+- Column structure
+- Troubleshooting
 
 ## Edit Checklist for Maria
 
@@ -71,12 +138,25 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ### 🟡 SHOULD DO (Important)
 
-5. **Update Menu Prices**
-   - Spanish menu: `content/menu.es.json`
-   - English menu: `content/menu.en.json`
-   - Edit the `"price"` field for each item (format: "12.00")
+5. **Update Menu Prices** (Choose one method)
 
-6. **Update Wine List & Prices**
+   **Option A - Google Sheets (Recommended):**
+   - Set up Google Sheets integration (see "Google Sheets Integration" section)
+   - Edit menu directly in Google Sheets - changes appear automatically
+   - See [docs/GOOGLE_SHEETS_INSTRUCCIONES.md](docs/GOOGLE_SHEETS_INSTRUCCIONES.md) for details
+
+   **Option B - Local JSON Files:**
+   - Spanish menu: `data/carta_items.json`
+   - English menu: `content/menu.en.json`
+   - Edit the `"precio"` field for each item (format: "12.00")
+
+6. **Update Wine List & Prices** (Choose one method)
+
+   **Option A - Google Sheets (Recommended):**
+   - Set up Google Sheets integration for wines
+   - Edit wine list in Google Sheets
+
+   **Option B - Local JSON Files:**
    - Spanish wines: `content/wine.es.json`
    - English wines: `content/wine.en.json`
    - Edit prices and add/remove wines as needed
@@ -159,8 +239,8 @@ CNAME   www     cname.vercel-dns.com        3600
 nueva-bota-90-website/
 ├── app/
 │   ├── page.tsx              # Home page
-│   ├── menu/page.tsx         # Menu page
-│   ├── vinos/page.tsx        # Wine page
+│   ├── menu/page.tsx         # Menu page (server component)
+│   ├── vinos/page.tsx        # Wine page (server component)
 │   ├── contacto/page.tsx     # Contact page
 │   ├── layout.tsx            # Main layout with Header/Footer
 │   └── globals.css           # Global styles
@@ -172,12 +252,18 @@ nueva-bota-90-website/
 │   └── MenuSection.tsx       # Menu/wine renderer
 ├── content/
 │   ├── i18n.ts              # Site copy (ES/EN)
-│   ├── menu.es.json         # Spanish menu
 │   ├── menu.en.json         # English menu
-│   ├── wine.es.json         # Spanish wines
 │   └── wine.en.json         # English wines
+├── data/
+│   └── carta_items.json     # Spanish menu (fallback)
+├── lib/
+│   ├── csvParser.ts         # CSV parsing utilities
+│   ├── menuDataFetcher.ts   # Google Sheets data fetcher
+│   └── getServerLanguage.ts # Server-side language detection
 ├── hooks/
-│   └── useLanguage.ts       # Language context
+│   └── useLanguage.ts       # Language context (client)
+├── docs/
+│   └── GOOGLE_SHEETS_INSTRUCCIONES.md  # Spanish owner guide
 └── public/
     └── images/              # Your photos go here!
 ```
