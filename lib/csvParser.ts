@@ -6,8 +6,10 @@ import { ItemCarta } from '@/types/menu';
  */
 export function parseCSV(
   csvText: string,
-  columnMapping: Record<string, string>
+  columnMapping: Record<string, string>,
+  debugLabel?: string
 ): ItemCarta[] {
+  const debugEnabled = process.env.NEXT_PUBLIC_DEBUG === '1';
   const lines = csvText
     .trim()
     .split(/\r?\n/)
@@ -39,6 +41,8 @@ export function parseCSV(
 
   // Parse data rows
   const items: ItemCarta[] = [];
+  let parsedRows = 0;
+  let availableRows = 0;
 
   for (let i = 1; i < lines.length; i++) {
     const fields = parseCSVLine(lines[i]);
@@ -50,14 +54,24 @@ export function parseCSV(
 
     try {
       const item = parseRow(fields, headerIndices, columnMapping);
+      parsedRows += 1;
+
       // Only include items that are available
       if (item.disponible) {
         items.push(item);
+        availableRows += 1;
       }
     } catch (error) {
       console.warn(`[CSV Parser] Skipping invalid row ${i + 1}:`, error);
       // Continue parsing other rows
     }
+  }
+
+  if (debugEnabled) {
+    const label = debugLabel ? ` ${debugLabel}` : '';
+    console.log(
+      `[CSV Parser]${label} rows=${Math.max(lines.length - 1, 0)} parsed=${parsedRows} available=${availableRows}`
+    );
   }
 
   return items;
@@ -129,7 +143,10 @@ function parseRow(
 
     // Type conversion based on field name
     if (cartaField === 'disponible') {
-      item[cartaField] = parseBoolean(value);
+      const parsed = parseBoolean(value);
+      if (parsed !== undefined) {
+        item[cartaField] = parsed;
+      }
     } else if (
       cartaField === 'precio' ||
       cartaField === 'precio_media' ||
@@ -172,12 +189,27 @@ function parseRow(
 
 /**
  * Converts a string to a boolean
- * Accepts: TRUE, true, 1, yes, YES → true
- * Everything else → false
+ * Accepts:
+ * - true: TRUE, true, 1, yes, sí, si
+ * - false: FALSE, false, 0, no
+ * Empty/unknown values return undefined (caller can apply a default)
  */
-function parseBoolean(value: string): boolean {
+function parseBoolean(value: string): boolean | undefined {
   const normalized = value.toLowerCase().trim();
-  return ['true', '1', 'yes', 'sí', 'si'].includes(normalized);
+
+  if (normalized === '' || normalized === '—' || normalized === '-') {
+    return undefined;
+  }
+
+  if (['true', '1', 'yes', 'sí', 'si'].includes(normalized)) {
+    return true;
+  }
+
+  if (['false', '0', 'no'].includes(normalized)) {
+    return false;
+  }
+
+  return undefined;
 }
 
 /**
@@ -260,7 +292,7 @@ export function parseCartaCSV(csvText: string): ItemCarta[] {
     orden: 'orden',
   };
 
-  return parseCSV(csvText, columnMapping);
+  return parseCSV(csvText, columnMapping, 'carta');
 }
 
 /**
@@ -279,5 +311,5 @@ export function parseVinosCSV(csvText: string): ItemCarta[] {
     orden: 'orden',
   };
 
-  return parseCSV(csvText, columnMapping);
+  return parseCSV(csvText, columnMapping, 'vinos');
 }

@@ -11,9 +11,10 @@ export const dynamic = "force-dynamic";
 export default async function WinePage({
   searchParams,
 }: {
-  searchParams: { lang?: string };
+  searchParams: Promise<{ lang?: string }>;
 }) {
-  const language = getServerLanguage(searchParams);
+  const resolvedSearchParams = await searchParams;
+  const language = getServerLanguage(resolvedSearchParams);
   const t = i18n[language];
 
   // For Spanish: fetch from Google Sheets CSV with JSON fallback
