@@ -18,9 +18,9 @@ export async function GET() {
         availableRows: 0,
         disponibleTokenHistogram: {},
         headers: [],
-        missingRequiredColumns: [],
+        missingRequiredColumns: ['(csv url not configured)'],
       },
-      { status: 500, headers: { 'Cache-Control': 'no-store' } }
+      { status: 200, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 
@@ -34,9 +34,9 @@ export async function GET() {
         availableRows: 0,
         disponibleTokenHistogram: {},
         headers: [],
-        missingRequiredColumns: [],
+        missingRequiredColumns: ['(csv fetch failed)'],
       },
-      { status: 502, headers: { 'Cache-Control': 'no-store' } }
+      { status: 200, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 
