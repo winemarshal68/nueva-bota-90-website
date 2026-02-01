@@ -1,5 +1,14 @@
 import { ItemCarta } from '@/types/menu';
 
+export type VinosCSVDiagnostics = {
+  totalRows: number;
+  parsedRows: number;
+  availableRows: number;
+  disponibleTokenHistogram: Record<string, number>;
+  headers: string[];
+  missingRequiredColumns: string[];
+};
+
 /**
  * Parses a CSV string into an array of ItemCarta objects
  * Handles type conversion, validation, and filtering
@@ -351,4 +360,83 @@ export function parseVinosCSV(csvText: string): ItemCarta[] {
   };
 
   return parseCSV(csvText, columnMapping, 'vinos');
+}
+
+export function parseVinosCSVWithDiagnostics(csvText: string): VinosCSVDiagnostics {
+  const columnMapping = {
+    categoria: 'seccion',
+    nombre: 'nombre',
+    descripcion: 'descripcion',
+    origen: 'region',
+    precio: 'precio',
+    disponible: 'disponible',
+    orden: 'orden',
+  };
+
+  const lines = csvText
+    .trim()
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
+  const totalRows = Math.max(lines.length - 1, 0);
+
+  if (lines.length < 2) {
+    return {
+      totalRows,
+      parsedRows: 0,
+      availableRows: 0,
+      disponibleTokenHistogram: {},
+      headers: lines.length > 0 ? parseCSVLine(lines[0]) : [],
+      missingRequiredColumns: Object.keys(columnMapping),
+    };
+  }
+
+  const headers = parseCSVLine(lines[0]);
+  const headerIndices = createHeaderIndices(headers);
+
+  const requiredColumns = Object.keys(columnMapping);
+  const missingRequiredColumns = requiredColumns.filter(
+    (col) => !headerIndices.has(col.toLowerCase())
+  );
+
+  const disponibleIndex = headerIndices.get('disponible');
+  const disponibleTokenHistogram: Record<string, number> = {};
+
+  let parsedRows = 0;
+  let availableRows = 0;
+
+  for (let i = 1; i < lines.length; i++) {
+    const fields = parseCSVLine(lines[i]);
+
+    if (fields.every((field) => field.trim() === '')) {
+      continue;
+    }
+
+    if (disponibleIndex !== undefined) {
+      const raw = (fields[disponibleIndex] ?? '').toString();
+      const token = raw.trim().toLowerCase();
+      const key = token === '' ? '(blank)' : token;
+      disponibleTokenHistogram[key] = (disponibleTokenHistogram[key] || 0) + 1;
+    }
+
+    try {
+      const item = parseRow(fields, headerIndices, columnMapping);
+      parsedRows += 1;
+      if (item.disponible) {
+        availableRows += 1;
+      }
+    } catch {
+      // Diagnostics only: ignore invalid rows
+    }
+  }
+
+  return {
+    totalRows,
+    parsedRows,
+    availableRows,
+    disponibleTokenHistogram,
+    headers,
+    missingRequiredColumns,
+  };
 }
