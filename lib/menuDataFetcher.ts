@@ -10,6 +10,33 @@ import wineESData from '@/content/wine.es.json';
 const isVercelDeployment = process.env.VERCEL === '1';
 const allowLocalFallback = !isVercelDeployment;
 
+// Vinos: force the correct tab gid in the CSV export URL.
+// This prevents accidentally pointing at a 1-row helper tab.
+const VINOS_GID = '862386144';
+
+function extractGoogleSheetId(url: string): string | null {
+  try {
+    const u = new URL(url);
+    const match = u.pathname.match(/\/spreadsheets\/d\/([^/]+)/);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+function buildGoogleSheetsCsvExportUrl(sheetId: string, gid: string): string {
+  const u = new URL(`https://docs.google.com/spreadsheets/d/${sheetId}/export`);
+  u.searchParams.set('format', 'csv');
+  u.searchParams.set('gid', gid);
+  return u.toString();
+}
+
+function normalizeVinosCsvUrl(rawUrl: string): string {
+  const sheetId = extractGoogleSheetId(rawUrl);
+  if (!sheetId) return rawUrl;
+  return buildGoogleSheetsCsvExportUrl(sheetId, VINOS_GID);
+}
+
 /**
  * Result type for data fetching - allows graceful error handling
  */
@@ -27,7 +54,8 @@ export type FetchCSVTextResult = {
 };
 
 export async function fetchVinosCSVText(): Promise<FetchCSVTextResult> {
-  const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
+  const rawCsvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
+  const csvUrl = rawCsvUrl ? normalizeVinosCsvUrl(rawCsvUrl) : rawCsvUrl;
 
   if (!csvUrl || csvUrl.trim() === '') {
     return {
@@ -145,7 +173,8 @@ export async function fetchCartaData(): Promise<FetchResult<ItemCarta[]>> {
  * This function returns ItemCarta[] for consistency
  */
 export async function fetchVinosData(): Promise<FetchResult<ItemCarta[]>> {
-  const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
+  const rawCsvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
+  const csvUrl = rawCsvUrl ? normalizeVinosCsvUrl(rawCsvUrl) : rawCsvUrl;
 
   // PRODUCTION: CSV URL is REQUIRED
   if (!csvUrl || csvUrl.trim() === '') {
