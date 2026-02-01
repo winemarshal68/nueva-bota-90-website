@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { parseVinosCSVWithDiagnostics } from '@/lib/csvParser';
+import { fetchVinosCSVText } from '@/lib/menuDataFetcher';
 
 export const runtime = 'nodejs';
 
@@ -8,49 +9,42 @@ export async function GET() {
     return new Response(null, { status: 404 });
   }
 
-  const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
+  const fetched = await fetchVinosCSVText();
+  const timestamp = new Date().toISOString();
 
-  if (!csvUrl || csvUrl.trim() === '') {
+  if (!fetched.csvText) {
     return NextResponse.json(
       {
+        timestamp,
         totalRows: 0,
         parsedRows: 0,
         availableRows: 0,
         disponibleTokenHistogram: {},
         headers: [],
-        missingRequiredColumns: ['(csv url not configured)'],
+        missingRequiredColumns: [],
+        fetchOk: false,
+        fetchStatus: fetched.status,
+        fetchContentType: fetched.contentType,
       },
       { status: 200, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 
-  const response = await fetch(csvUrl, { cache: 'no-store' });
+  const diagnostics = parseVinosCSVWithDiagnostics(fetched.csvText);
 
-  if (!response.ok) {
-    const contentType = response.headers.get('content-type') || '';
-    return NextResponse.json(
-      {
-        totalRows: 0,
-        parsedRows: 0,
-        availableRows: 0,
-        disponibleTokenHistogram: {},
-        headers: [],
-        missingRequiredColumns: [
-          `(csv fetch failed: HTTP ${response.status})`,
-          contentType ? `(content-type: ${contentType})` : '(content-type: unknown)',
-        ],
-      },
-      { status: 200, headers: { 'Cache-Control': 'no-store' } }
-    );
-  }
-
-  const csvText = await response.text();
-  const diagnostics = parseVinosCSVWithDiagnostics(csvText);
-
-  return NextResponse.json(diagnostics, {
-    status: 200,
-    headers: {
-      'Cache-Control': 'no-store',
+  return NextResponse.json(
+    {
+      timestamp,
+      ...diagnostics,
+      fetchOk: true,
+      fetchStatus: fetched.status,
+      fetchContentType: fetched.contentType,
     },
-  });
+    {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    }
+  );
 }

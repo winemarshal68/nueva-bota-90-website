@@ -18,6 +18,63 @@ export type FetchResult<T> = {
   error?: string;
 };
 
+export type FetchCSVTextResult = {
+  csvUrlConfigured: boolean;
+  status: number | null;
+  contentType: string | null;
+  csvText: string | null;
+  error?: string;
+};
+
+export async function fetchVinosCSVText(): Promise<FetchCSVTextResult> {
+  const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL;
+
+  if (!csvUrl || csvUrl.trim() === '') {
+    return {
+      csvUrlConfigured: false,
+      status: null,
+      contentType: null,
+      csvText: null,
+      error: 'NEXT_PUBLIC_GOOGLE_SHEET_VINOS_CSV_URL is not configured',
+    };
+  }
+
+  try {
+    // Match the production fetch behavior used by fetchVinosData()
+    const response = await fetch(csvUrl, {
+      next: { revalidate: 60 },
+    });
+
+    const contentType = response.headers.get('content-type');
+
+    if (!response.ok) {
+      return {
+        csvUrlConfigured: true,
+        status: response.status,
+        contentType,
+        csvText: null,
+        error: `Failed to fetch vinos CSV: HTTP ${response.status} ${response.statusText}`,
+      };
+    }
+
+    const csvText = await response.text();
+    return {
+      csvUrlConfigured: true,
+      status: response.status,
+      contentType,
+      csvText,
+    };
+  } catch (error) {
+    return {
+      csvUrlConfigured: true,
+      status: null,
+      contentType: null,
+      csvText: null,
+      error: `Failed to fetch vinos CSV: ${error instanceof Error ? error.message : String(error)}`,
+    };
+  }
+}
+
 /**
  * Fetches carta (food menu) data from Google Sheets CSV
  *

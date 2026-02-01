@@ -416,7 +416,7 @@ export function parseVinosCSVWithDiagnostics(csvText: string): VinosCSVDiagnosti
     if (disponibleIndex !== undefined) {
       const raw = (fields[disponibleIndex] ?? '').toString();
       const token = raw.trim().toLowerCase();
-      const key = token === '' ? '(blank)' : token;
+      const key = token;
       disponibleTokenHistogram[key] = (disponibleTokenHistogram[key] || 0) + 1;
     }
 
