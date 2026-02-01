@@ -9,7 +9,7 @@ export function parseCSV(
   columnMapping: Record<string, string>,
   debugLabel?: string
 ): ItemCarta[] {
-  const debugEnabled = process.env.NEXT_PUBLIC_DEBUG === '1';
+  const debugEnabled = process.env.DEBUG_CSV === '1';
   const lines = csvText
     .trim()
     .split(/\r?\n/)
@@ -25,6 +25,13 @@ export function parseCSV(
   const headers = parseCSVLine(lines[0]);
   const headerIndices = createHeaderIndices(headers);
 
+  const disponibleColumn = Object.entries(columnMapping).find(
+    ([, cartaField]) => cartaField === 'disponible'
+  )?.[0];
+  const disponibleIndex = disponibleColumn
+    ? headerIndices.get(disponibleColumn.toLowerCase())
+    : undefined;
+
   // Validate required columns exist
   const requiredColumns = Object.keys(columnMapping);
   const missingColumns = requiredColumns.filter(
@@ -32,6 +39,14 @@ export function parseCSV(
   );
 
   if (missingColumns.length > 0) {
+    if (debugEnabled) {
+      const label = debugLabel ? ` ${debugLabel}` : '';
+      console.log(
+        `[CSV Parser]${label} missingColumns=${missingColumns.join(',')} headers=[${headers
+          .map((h) => h.trim())
+          .join(', ')}]`
+      );
+    }
     console.warn(
       `[CSV Parser] Missing required columns: ${missingColumns.join(', ')}`
     );
@@ -43,6 +58,7 @@ export function parseCSV(
   const items: ItemCarta[] = [];
   let parsedRows = 0;
   let availableRows = 0;
+  const disponibleTokenCounts: Record<string, number> = {};
 
   for (let i = 1; i < lines.length; i++) {
     const fields = parseCSVLine(lines[i]);
@@ -50,6 +66,13 @@ export function parseCSV(
     // Skip blank rows (all fields empty)
     if (fields.every((field) => field.trim() === '')) {
       continue;
+    }
+
+    if (debugEnabled && disponibleIndex !== undefined) {
+      const raw = (fields[disponibleIndex] ?? '').toString();
+      const token = raw.trim().toLowerCase();
+      const key = token === '' ? '(blank)' : token;
+      disponibleTokenCounts[key] = (disponibleTokenCounts[key] || 0) + 1;
     }
 
     try {
@@ -72,6 +95,13 @@ export function parseCSV(
     console.log(
       `[CSV Parser]${label} rows=${Math.max(lines.length - 1, 0)} parsed=${parsedRows} available=${availableRows}`
     );
+
+    if (debugLabel === 'vinos') {
+      const sorted = Object.entries(disponibleTokenCounts).sort((a, b) => b[1] - a[1]);
+      const asObject: Record<string, number> = {};
+      for (const [k, v] of sorted) asObject[k] = v;
+      console.log(`[CSV Parser]${label} disponibleTokens=${JSON.stringify(asObject)}`);
+    }
   }
 
   return items;
@@ -88,16 +118,36 @@ function parseCSVLine(line: string): string[] {
   for (let i = 0; i < line.length; i++) {
     const char = line[i];
 
+    if (inQuotes) {
+      if (char === '"') {
+        const next = line[i + 1];
+        // Escaped quote inside a quoted field: "" => "
+        if (next === '"') {
+          current += '"';
+          i += 1;
+          continue;
+        }
+        // End of quoted field
+        inQuotes = false;
+        continue;
+      }
+
+      current += char;
+      continue;
+    }
+
     if (char === '"') {
-      // Toggle quote state
-      inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      // Field delimiter (only if not in quotes)
+      inQuotes = true;
+      continue;
+    }
+
+    if (char === ',') {
       fields.push(current.trim());
       current = '';
-    } else {
-      current += char;
+      continue;
     }
+
+    current += char;
   }
 
   // Add the last field
@@ -143,10 +193,7 @@ function parseRow(
 
     // Type conversion based on field name
     if (cartaField === 'disponible') {
-      const parsed = parseBoolean(value);
-      if (parsed !== undefined) {
-        item[cartaField] = parsed;
-      }
+      item[cartaField] = parseDisponibilidad(value);
     } else if (
       cartaField === 'precio' ||
       cartaField === 'precio_media' ||
@@ -188,28 +235,20 @@ function parseRow(
 }
 
 /**
- * Converts a string to a boolean
- * Accepts:
- * - true: TRUE, true, 1, yes, sí, si
- * - false: FALSE, false, 0, no
- * Empty/unknown values return undefined (caller can apply a default)
+ * Parses the "disponible" column.
+ * Default behavior: available unless explicitly false.
  */
-function parseBoolean(value: string): boolean | undefined {
-  const normalized = value.toLowerCase().trim();
+function parseDisponibilidad(raw: string | number | undefined | null): boolean {
+  const v = (raw ?? '').toString().trim().toLowerCase();
 
-  if (normalized === '' || normalized === '—' || normalized === '-') {
-    return undefined;
-  }
+  const falseTokens = new Set(['false', 'falso', '0', 'no', 'n', 'off']);
+  const trueTokens = new Set(['true', 'verdadero', '1', 'si', 'sí', 's', 'on']);
 
-  if (['true', '1', 'yes', 'sí', 'si'].includes(normalized)) {
-    return true;
-  }
+  if (falseTokens.has(v)) return false;
+  if (trueTokens.has(v)) return true;
 
-  if (['false', '0', 'no'].includes(normalized)) {
-    return false;
-  }
-
-  return undefined;
+  // Blank/unknown => available
+  return true;
 }
 
 /**
