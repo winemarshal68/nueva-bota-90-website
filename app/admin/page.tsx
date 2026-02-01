@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ExternalLink, Database, FileText, Clock, Activity } from 'lucide-react';
-import { fetchCartaData, fetchVinosData } from '@/lib/menuDataFetcher';
+import { fetchCartaData, fetchVinosCSVText, fetchVinosData } from '@/lib/menuDataFetcher';
+import { parseVinosCSVWithDiagnostics } from '@/lib/csvParser';
 
 // Admin page should always show fresh data
 export const revalidate = 0;
@@ -126,9 +127,20 @@ export default async function AdminPage() {
   const cartaResult = await fetchCartaData();
   const vinosResult = await fetchVinosData();
 
+  const debugEnabled = process.env.DEBUG_CSV === '1';
+  const MIN_VINOS_ROWS = 5;
+
   // Extract data arrays (handle new FetchResult type)
   const cartaItems = cartaResult.data;
   const vinosItems = vinosResult.data;
+
+  let resolvedVinosDiagnostics: ReturnType<typeof parseVinosCSVWithDiagnostics> | null = null;
+  if (debugEnabled) {
+    const fetched = await fetchVinosCSVText();
+    if (fetched.csvText) {
+      resolvedVinosDiagnostics = parseVinosCSVWithDiagnostics(fetched.csvText);
+    }
+  }
 
   // Current server time for "last fetched" display
   const serverTime = new Date().toLocaleString('es-ES', {
@@ -510,6 +522,12 @@ export default async function AdminPage() {
               <div className="text-sm text-stone-500 mt-2">
                 {vinosItems.length} items en total
               </div>
+
+              {debugEnabled && resolvedVinosDiagnostics && resolvedVinosDiagnostics.parsedRows < MIN_VINOS_ROWS && (
+                <div className="mt-3 bg-amber-50 border border-amber-200 text-amber-900 text-sm rounded p-3">
+                  ⚠ Vinos feed unusually small ({resolvedVinosDiagnostics.parsedRows} rows). Check source sheet.
+                </div>
+              )}
             </div>
           </div>
         </div>

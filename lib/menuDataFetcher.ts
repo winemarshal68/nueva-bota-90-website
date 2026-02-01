@@ -1,5 +1,6 @@
 import { ItemCarta } from '@/types/menu';
-import { parseCartaCSV, parseVinosCSV } from './csvParser';
+import { createHash } from 'crypto';
+import { parseCartaCSV, parseVinosCSV, parseVinosCSVWithDiagnostics } from './csvParser';
 
 // Local JSON imports - ONLY used in development as last resort
 import cartaItemsData from '@/data/carta_items.json';
@@ -13,6 +14,11 @@ const allowLocalFallback = !isVercelDeployment;
 // Vinos: force the correct tab gid in the CSV export URL.
 // This prevents accidentally pointing at a 1-row helper tab.
 const VINOS_GID = '862386144';
+const MIN_VINOS_ROWS = 5;
+
+function sha256Hex8(input: string): string {
+  return createHash('sha256').update(input).digest('hex').slice(0, 8);
+}
 
 function extractGoogleSheetId(url: string): string | null {
   try {
@@ -201,6 +207,36 @@ export async function fetchVinosData(): Promise<FetchResult<ItemCarta[]>> {
     }
 
     const csvText = await response.text();
+
+    const diagnostics = parseVinosCSVWithDiagnostics(csvText);
+
+    if (diagnostics.parsedRows < MIN_VINOS_ROWS) {
+      const timestamp = new Date().toISOString();
+      const contentLengthBytes = Buffer.byteLength(csvText, 'utf8');
+
+      let csvUrlHost: string | null = null;
+      let csvUrlPathHash: string | null = null;
+      let csvUrlQueryHash: string | null = null;
+
+      try {
+        const u = new URL(csvUrl);
+        csvUrlHost = u.host;
+        csvUrlPathHash = sha256Hex8(u.pathname);
+        csvUrlQueryHash = sha256Hex8(u.search.startsWith('?') ? u.search.slice(1) : u.search);
+      } catch {
+        // Ignore invalid URL
+      }
+
+      console.error('VINOS_FEED_TOO_SMALL', {
+        timestamp,
+        parsedRows: diagnostics.parsedRows,
+        totalRows: diagnostics.totalRows,
+        contentLengthBytes,
+        csvUrlHost,
+        csvUrlPathHash,
+        csvUrlQueryHash,
+      });
+    }
 
     // Parse CSV
     const items = parseVinosCSV(csvText);
