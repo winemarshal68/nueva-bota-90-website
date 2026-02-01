@@ -1,6 +1,6 @@
 import { ItemCarta } from '@/types/menu';
 import { createHash } from 'crypto';
-import { parseCartaCSV, parseVinosCSV, parseVinosCSVWithDiagnostics } from './csvParser';
+import { parseCartaCSV, parseCartaCSVWithDiagnostics, parseVinosCSV, parseVinosCSVWithDiagnostics } from './csvParser';
 
 // Local JSON imports - ONLY used in development as last resort
 import cartaItemsData from '@/data/carta_items.json';
@@ -15,6 +15,9 @@ const allowLocalFallback = !isVercelDeployment;
 // This prevents accidentally pointing at a 1-row helper tab.
 const VINOS_GID = '862386144';
 const MIN_VINOS_ROWS = 5;
+
+const MIN_CARTA_ITEMS = 10;
+const MIN_CARTA_CATEGORIES = 2;
 
 function sha256Hex8(input: string): string {
   return createHash('sha256').update(input).digest('hex').slice(0, 8);
@@ -115,6 +118,54 @@ export async function fetchVinosCSVText(): Promise<FetchCSVTextResult> {
  * PRODUCTION: Returns empty array with error message if fetch fails (non-fatal)
  * DEVELOPMENT: Falls back to local JSON for easier local testing
  */
+export async function fetchCartaCSVText(): Promise<FetchCSVTextResult> {
+  const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL;
+
+  if (!csvUrl || csvUrl.trim() === '') {
+    return {
+      csvUrlConfigured: false,
+      status: null,
+      contentType: null,
+      csvText: null,
+      error: 'NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL is not configured',
+    };
+  }
+
+  try {
+    const response = await fetch(csvUrl, {
+      next: { revalidate: 60 },
+    });
+
+    const contentType = response.headers.get('content-type');
+
+    if (!response.ok) {
+      return {
+        csvUrlConfigured: true,
+        status: response.status,
+        contentType,
+        csvText: null,
+        error: `Failed to fetch carta CSV: HTTP ${response.status} ${response.statusText}`,
+      };
+    }
+
+    const csvText = await response.text();
+    return {
+      csvUrlConfigured: true,
+      status: response.status,
+      contentType,
+      csvText,
+    };
+  } catch (error) {
+    return {
+      csvUrlConfigured: true,
+      status: null,
+      contentType: null,
+      csvText: null,
+      error: `Failed to fetch carta CSV: ${error instanceof Error ? error.message : String(error)}`,
+    };
+  }
+}
+
 export async function fetchCartaData(): Promise<FetchResult<ItemCarta[]>> {
   const csvUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_CARTA_CSV_URL;
 
@@ -143,6 +194,40 @@ export async function fetchCartaData(): Promise<FetchResult<ItemCarta[]>> {
     }
 
     const csvText = await response.text();
+
+    // Run diagnostics
+    const diagnostics = parseCartaCSVWithDiagnostics(csvText);
+
+    // Check for too few items or categories
+    if (diagnostics.parsedItemsCount < MIN_CARTA_ITEMS || diagnostics.categoryCount < MIN_CARTA_CATEGORIES) {
+      const timestamp = new Date().toISOString();
+      const contentLengthBytes = Buffer.byteLength(csvText, 'utf8');
+
+      let csvUrlHost: string | null = null;
+      let csvUrlPathHash: string | null = null;
+      let csvUrlQueryHash: string | null = null;
+
+      try {
+        const u = new URL(csvUrl);
+        csvUrlHost = u.host;
+        csvUrlPathHash = sha256Hex8(u.pathname);
+        csvUrlQueryHash = sha256Hex8(u.search.startsWith('?') ? u.search.slice(1) : u.search);
+      } catch {
+        // Ignore invalid URL
+      }
+
+      console.error('CARTA_FEED_TOO_SMALL', {
+        timestamp,
+        parsedItemsCount: diagnostics.parsedItemsCount,
+        categoryCount: diagnostics.categoryCount,
+        totalRows: diagnostics.totalRows,
+        contentLengthBytes,
+        csvUrlHost,
+        csvUrlPathHash,
+        csvUrlQueryHash,
+        missingRequiredColumns: diagnostics.missingRequiredColumns,
+      });
+    }
 
     // Parse CSV
     const items = parseCartaCSV(csvText);

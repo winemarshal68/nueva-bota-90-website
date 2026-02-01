@@ -9,6 +9,16 @@ export type VinosCSVDiagnostics = {
   missingRequiredColumns: string[];
 };
 
+export type CartaCSVDiagnostics = {
+  totalRows: number;
+  parsedItemsCount: number;
+  categoryCount: number;
+  availableItemsCount: number;
+  headers: string[];
+  missingRequiredColumns: string[];
+  disponibleTokenHistogram: Record<string, number>;
+};
+
 /**
  * Parses a CSV string into an array of ItemCarta objects
  * Handles type conversion, validation, and filtering
@@ -438,5 +448,90 @@ export function parseVinosCSVWithDiagnostics(csvText: string): VinosCSVDiagnosti
     disponibleTokenHistogram,
     headers,
     missingRequiredColumns,
+  };
+}
+
+export function parseCartaCSVWithDiagnostics(csvText: string): CartaCSVDiagnostics {
+  const columnMapping = {
+    seccion: 'seccion',
+    nombre: 'nombre',
+    descripcion: 'descripcion',
+    precio: 'precio',
+    precio_media: 'precio_media',
+    precio_entera: 'precio_entera',
+    disponible: 'disponible',
+    orden: 'orden',
+  };
+
+  const lines = csvText
+    .trim()
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
+  const totalRows = Math.max(lines.length - 1, 0);
+
+  if (lines.length < 2) {
+    return {
+      totalRows,
+      parsedItemsCount: 0,
+      categoryCount: 0,
+      availableItemsCount: 0,
+      headers: lines.length > 0 ? parseCSVLine(lines[0]) : [],
+      missingRequiredColumns: Object.keys(columnMapping),
+      disponibleTokenHistogram: {},
+    };
+  }
+
+  const headers = parseCSVLine(lines[0]);
+  const headerIndices = createHeaderIndices(headers);
+
+  const requiredColumns = Object.keys(columnMapping);
+  const missingRequiredColumns = requiredColumns.filter(
+    (col) => !headerIndices.has(col.toLowerCase())
+  );
+
+  const disponibleIndex = headerIndices.get('disponible');
+  const disponibleTokenHistogram: Record<string, number> = {};
+
+  let parsedItemsCount = 0;
+  let availableItemsCount = 0;
+  const categories = new Set<string>();
+
+  for (let i = 1; i < lines.length; i++) {
+    const fields = parseCSVLine(lines[i]);
+
+    if (fields.every((field) => field.trim() === '')) {
+      continue;
+    }
+
+    if (disponibleIndex !== undefined) {
+      const raw = (fields[disponibleIndex] ?? '').toString();
+      const token = raw.trim().toLowerCase();
+      disponibleTokenHistogram[token] = (disponibleTokenHistogram[token] || 0) + 1;
+    }
+
+    try {
+      const item = parseRow(fields, headerIndices, columnMapping);
+      parsedItemsCount += 1;
+      if (item.seccion) {
+        categories.add(item.seccion);
+      }
+      if (item.disponible) {
+        availableItemsCount += 1;
+      }
+    } catch {
+      // Diagnostics only: ignore invalid rows
+    }
+  }
+
+  return {
+    totalRows,
+    parsedItemsCount,
+    categoryCount: categories.size,
+    availableItemsCount,
+    headers,
+    missingRequiredColumns,
+    disponibleTokenHistogram,
   };
 }

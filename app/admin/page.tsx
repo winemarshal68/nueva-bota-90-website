@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ExternalLink, Database, FileText, Clock, Activity } from 'lucide-react';
-import { fetchCartaData, fetchVinosCSVText, fetchVinosData } from '@/lib/menuDataFetcher';
-import { parseVinosCSVWithDiagnostics } from '@/lib/csvParser';
+import { fetchCartaData, fetchCartaCSVText, fetchVinosCSVText, fetchVinosData } from '@/lib/menuDataFetcher';
+import { parseCartaCSVWithDiagnostics, parseVinosCSVWithDiagnostics } from '@/lib/csvParser';
 
 // Admin page should always show fresh data
 export const revalidate = 0;
@@ -129,16 +129,23 @@ export default async function AdminPage() {
 
   const debugEnabled = process.env.DEBUG_CSV === '1';
   const MIN_VINOS_ROWS = 5;
+  const MIN_CARTA_ITEMS = 10;
+  const MIN_CARTA_CATEGORIES = 2;
 
   // Extract data arrays (handle new FetchResult type)
   const cartaItems = cartaResult.data;
   const vinosItems = vinosResult.data;
 
   let resolvedVinosDiagnostics: ReturnType<typeof parseVinosCSVWithDiagnostics> | null = null;
+  let resolvedCartaDiagnostics: ReturnType<typeof parseCartaCSVWithDiagnostics> | null = null;
   if (debugEnabled) {
-    const fetched = await fetchVinosCSVText();
-    if (fetched.csvText) {
-      resolvedVinosDiagnostics = parseVinosCSVWithDiagnostics(fetched.csvText);
+    const fetchedVinos = await fetchVinosCSVText();
+    if (fetchedVinos.csvText) {
+      resolvedVinosDiagnostics = parseVinosCSVWithDiagnostics(fetchedVinos.csvText);
+    }
+    const fetchedCarta = await fetchCartaCSVText();
+    if (fetchedCarta.csvText) {
+      resolvedCartaDiagnostics = parseCartaCSVWithDiagnostics(fetchedCarta.csvText);
     }
   }
 
@@ -502,6 +509,17 @@ export default async function AdminPage() {
               <div className="text-sm text-stone-500 mt-2">
                 {cartaItems.length} items en total
               </div>
+
+              {debugEnabled && resolvedCartaDiagnostics && (resolvedCartaDiagnostics.parsedItemsCount < MIN_CARTA_ITEMS || resolvedCartaDiagnostics.categoryCount < MIN_CARTA_CATEGORIES) && (
+                <div className="mt-3 bg-amber-50 border border-amber-200 text-amber-900 text-sm rounded p-3">
+                  ⚠ Carta feed unusually small ({resolvedCartaDiagnostics.parsedItemsCount} items, {resolvedCartaDiagnostics.categoryCount} categories). Check source sheet.
+                  {resolvedCartaDiagnostics.missingRequiredColumns.length > 0 && (
+                    <div className="mt-1 text-xs text-amber-800">
+                      Missing columns: {resolvedCartaDiagnostics.missingRequiredColumns.join(', ')}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Vinos source */}
