@@ -27,6 +27,7 @@ export async function GET() {
   const response = await fetch(csvUrl, { cache: 'no-store' });
 
   if (!response.ok) {
+    const contentType = response.headers.get('content-type') || '';
     return NextResponse.json(
       {
         totalRows: 0,
@@ -34,7 +35,10 @@ export async function GET() {
         availableRows: 0,
         disponibleTokenHistogram: {},
         headers: [],
-        missingRequiredColumns: ['(csv fetch failed)'],
+        missingRequiredColumns: [
+          `(csv fetch failed: HTTP ${response.status})`,
+          contentType ? `(content-type: ${contentType})` : '(content-type: unknown)',
+        ],
       },
       { status: 200, headers: { 'Cache-Control': 'no-store' } }
     );
