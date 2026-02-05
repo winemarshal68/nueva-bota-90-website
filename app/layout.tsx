@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/hooks/useLanguage";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,6 +44,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
