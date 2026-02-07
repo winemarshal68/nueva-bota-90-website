@@ -19,18 +19,18 @@ const VALID_SLUGS = [
 
 export const allergenType = defineType({
   name: 'allergen',
-  title: 'Allergen',
+  title: 'Alérgeno',
   type: 'document',
   fields: [
     defineField({
       name: 'title_en',
-      title: 'Title (EN)',
+      title: 'Nombre (EN)',
       type: 'string',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'title_es',
-      title: 'Title (ES)',
+      title: 'Nombre (ES)',
       type: 'string',
       validation: (r) => r.required(),
     }),
@@ -38,39 +38,39 @@ export const allergenType = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      description: 'Must be one of the 14 EU allergen slugs',
+      description: 'Debe ser uno de los 14 slugs de alérgenos UE',
       validation: (r) =>
         r.required().custom((slug) => {
-          if (!slug?.current) return 'Slug is required'
+          if (!slug?.current) return 'El slug es obligatorio'
           if (!VALID_SLUGS.includes(slug.current as (typeof VALID_SLUGS)[number])) {
-            return `Invalid slug. Must be one of: ${VALID_SLUGS.join(', ')}`
+            return `Slug no válido. Debe ser uno de: ${VALID_SLUGS.join(', ')}`
           }
           return true
         }),
     }),
     defineField({
       name: 'iconSlug',
-      title: 'Icon Slug',
+      title: 'Slug del icono',
       type: 'string',
-      description: 'Matches the slug; used to resolve icon file',
+      description: 'Debe coincidir con el slug; se usa para resolver el archivo del icono',
       readOnly: true,
     }),
     defineField({
       name: 'sortOrder',
-      title: 'Sort Order',
+      title: 'Orden',
       type: 'number',
       validation: (r) => r.required().min(1).max(14),
     }),
   ],
   orderings: [
     {
-      title: 'Sort Order',
+      title: 'Orden',
       name: 'sortOrderAsc',
       by: [{ field: 'sortOrder', direction: 'asc' }],
     },
   ],
   preview: {
-    select: { title: 'title_en', subtitle: 'slug.current', order: 'sortOrder' },
+    select: { title: 'title_es', subtitle: 'slug.current', order: 'sortOrder' },
     prepare({ title, subtitle, order }) {
       return { title: `${order}. ${title}`, subtitle }
     },

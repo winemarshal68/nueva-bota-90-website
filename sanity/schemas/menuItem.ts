@@ -2,66 +2,66 @@ import { defineField, defineType } from 'sanity'
 
 export const menuItemType = defineType({
   name: 'menuItem',
-  title: 'Menu Item',
+  title: 'Plato',
   type: 'document',
   fields: [
     defineField({
       name: 'name_es',
-      title: 'Name (ES)',
+      title: 'Nombre (ES)',
       type: 'string',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'description_es',
-      title: 'Description (ES)',
+      title: 'Descripción (ES)',
       type: 'text',
       rows: 2,
     }),
     defineField({
       name: 'price',
-      title: 'Price (€)',
+      title: 'Precio (€)',
       type: 'number',
     }),
     defineField({
       name: 'category',
-      title: 'Category',
+      title: 'Categoría',
       type: 'reference',
       to: [{ type: 'category' }],
     }),
     defineField({
       name: 'allergens',
-      title: 'Allergens',
+      title: 'Alérgenos',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'allergen' }] }],
     }),
     defineField({
       name: 'allergenEvidence',
-      title: 'Allergen Evidence',
+      title: 'Evidencia de alérgenos',
       type: 'text',
-      description: 'Notes on how allergens were determined (internal)',
+      description: 'Notas sobre cómo se determinaron los alérgenos (interno)',
       rows: 3,
     }),
     defineField({
       name: 'needsReview',
-      title: 'Needs Review',
+      title: 'Requiere revisión',
       type: 'boolean',
       initialValue: false,
     }),
     defineField({
       name: 'active',
-      title: 'Active',
+      title: 'Activo',
       type: 'boolean',
       initialValue: true,
     }),
     defineField({
       name: 'sortOrder',
-      title: 'Sort Order',
+      title: 'Orden',
       type: 'number',
     }),
   ],
   orderings: [
     {
-      title: 'Sort Order',
+      title: 'Orden',
       name: 'sortOrderAsc',
       by: [{ field: 'sortOrder', direction: 'asc' }],
     },
@@ -75,8 +75,8 @@ export const menuItemType = defineType({
     },
     prepare({ title, price, active, needsReview }) {
       const status = []
-      if (active === false) status.push('Inactive')
-      if (needsReview) status.push('Needs Review')
+      if (active === false) status.push('Inactivo')
+      if (needsReview) status.push('Revisar')
       return {
         title,
         subtitle: [price != null ? `€${price}` : null, ...status]

@@ -16,7 +16,7 @@ const ALLERGENS = [
   { sortOrder: 4, slug: 'fish', title_en: 'Fish', title_es: 'Pescado' },
   { sortOrder: 5, slug: 'peanuts', title_en: 'Peanuts', title_es: 'Cacahuetes' },
   { sortOrder: 6, slug: 'soy', title_en: 'Soy', title_es: 'Soja' },
-  { sortOrder: 7, slug: 'milk', title_en: 'Milk', title_es: 'Lácteos' },
+  { sortOrder: 7, slug: 'milk', title_en: 'Milk', title_es: 'Leche' },
   { sortOrder: 8, slug: 'nuts', title_en: 'Tree Nuts', title_es: 'Frutos de cáscara' },
   { sortOrder: 9, slug: 'celery', title_en: 'Celery', title_es: 'Apio' },
   { sortOrder: 10, slug: 'mustard', title_en: 'Mustard', title_es: 'Mostaza' },

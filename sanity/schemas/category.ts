@@ -2,31 +2,31 @@ import { defineField, defineType } from 'sanity'
 
 export const categoryType = defineType({
   name: 'category',
-  title: 'Category',
+  title: 'Categoría',
   type: 'document',
   fields: [
     defineField({
       name: 'title_es',
-      title: 'Title (ES)',
+      title: 'Nombre (ES)',
       type: 'string',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'sortOrder',
-      title: 'Sort Order',
+      title: 'Orden',
       type: 'number',
       validation: (r) => r.required(),
     }),
     defineField({
       name: 'active',
-      title: 'Active',
+      title: 'Activa',
       type: 'boolean',
       initialValue: true,
     }),
   ],
   orderings: [
     {
-      title: 'Sort Order',
+      title: 'Orden',
       name: 'sortOrderAsc',
       by: [{ field: 'sortOrder', direction: 'asc' }],
     },
@@ -36,7 +36,7 @@ export const categoryType = defineType({
     prepare({ title, order, active }) {
       return {
         title: `${order}. ${title}`,
-        subtitle: active === false ? 'Inactive' : undefined,
+        subtitle: active === false ? 'Inactiva' : undefined,
       }
     },
   },
