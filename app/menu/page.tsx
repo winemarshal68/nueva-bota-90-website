@@ -4,6 +4,7 @@ import menuEN from '@/content/menu.en.json';
 import { groupMenuItems, sectionMetadata } from '@/lib/menuData';
 import { getServerLanguage } from '@/lib/getServerLanguage';
 import { fetchCartaData } from '@/lib/menuDataFetcher';
+import { fetchAllergensByDishName } from '@/sanity/lib/queries';
 import type { ItemCarta } from '@/types/menu';
 
 // Force runtime rendering to prevent build-time prerender failures
@@ -23,13 +24,16 @@ export default async function MenuPage({
   let fetchError: string | undefined;
   let menuData;
 
+  // Fetch allergen mappings from Sanity (dish name → allergen badges)
+  const allergenMap = await fetchAllergensByDishName();
+
   if (language === 'es') {
     const result = await fetchCartaData();
     if (result.error || result.data.length === 0) {
       fetchError = result.error;
       menuData = { categories: [] };
     } else {
-      menuData = transformCartaToMenu(result.data);
+      menuData = transformCartaToMenu(result.data, allergenMap);
     }
   } else {
     menuData = menuEN;
@@ -68,28 +72,35 @@ export default async function MenuPage({
 }
 
 /**
- * Transforms Spanish carta data (ItemCarta[]) to the existing menu format
- * This adapter allows us to use the new Spanish schema while maintaining
- * backward compatibility with MenuSection component
+ * Transforms Spanish carta data (ItemCarta[]) to the existing menu format.
+ * Overlays allergen data from Sanity (matched by normalized dish name).
  */
-function transformCartaToMenu(items: ItemCarta[]) {
+function transformCartaToMenu(
+  items: ItemCarta[],
+  allergenMap: Map<string, { slug: string; title_en: string; title_es: string }[]>
+) {
   const sections = groupMenuItems(items);
 
   return {
-    categories: sections.map((section, index) => ({
+    categories: sections.map((section) => ({
       id: section.nombre.toLowerCase().replace(/\s+/g, '-'),
       name: section.nombre,
       description: sectionMetadata[section.nombre]?.descripcion,
       note: sectionMetadata[section.nombre]?.nota,
-      items: section.items.map(item => ({
-        id: `${section.nombre}-${item.orden}`,
-        name: item.nombre,
-        description: item.descripcion,
-        price: item.precio,
-        priceHalf: item.precio_media,
-        priceFull: item.precio_entera,
-        region: item.region
-      }))
+      items: section.items.map(item => {
+        const key = item.nombre.toLowerCase().trim();
+        const allergens = allergenMap.get(key);
+        return {
+          id: `${section.nombre}-${item.orden}`,
+          name: item.nombre,
+          description: item.descripcion,
+          price: item.precio,
+          priceHalf: item.precio_media,
+          priceFull: item.precio_entera,
+          region: item.region,
+          ...(allergens ? { allergens } : {}),
+        };
+      })
     }))
   };
 }

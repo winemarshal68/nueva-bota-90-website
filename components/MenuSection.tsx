@@ -1,6 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/hooks/useLanguage';
+import AllergenIcons, { type AllergenBadge } from './AllergenIcons';
 
 interface MenuItem {
   id: string;
@@ -10,6 +11,7 @@ interface MenuItem {
   priceHalf?: string;
   priceFull?: string;
   region?: string; // For wines
+  allergens?: AllergenBadge[];
 }
 
 interface MenuCategory {
@@ -75,6 +77,9 @@ export default function MenuSection({ categories }: MenuSectionProps) {
                 )}
                 {item.region && (
                   <p className="text-sm text-stone-500 italic mt-1">{item.region}</p>
+                )}
+                {item.allergens && item.allergens.length > 0 && (
+                  <AllergenIcons allergens={item.allergens} />
                 )}
               </div>
             ))}
